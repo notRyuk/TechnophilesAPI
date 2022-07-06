@@ -12,39 +12,47 @@ const UserBlogSchema = {
 const UserSchema = new Schema({
     _id: String,
     name: {
-        first: String,
-        last: String
+        first: {type: String, required: true},
+        last: {type: String, required: true}
     },
-    encryption: String,
-    email: String,
-    blogs: Array(UserBlogSchema)
+    encryption: {type: String, required: true},
+    email: {type: String, required: true},
+    blogs: {
+        type: [{
+            id: {type: String, required: true},
+            name: {type: String, required: true},
+            description: {type: String, required: true}
+        }], 
+        required: false, 
+        default: []
+    }
 })
 
 const BlogSchema = new Schema({
-    _id: String,
-    name: String,
-    description: String,
-    content: String
+    _id: {type: String, required: true},
+    name: {type: String, required: true},
+    description: {type: String, required: false},
+    content: {type: String, required: true}
 })
 
 const NGOSchema = new Schema({
-    _id: String,
-    name: String,
+    _id: {type: String, required: true},
+    name: {type: String, required: true},
     timings: {
-        start: String,
-        close: String
+        start: {type: String, required: true},
+        close: {type: String, required: true}
     },
     location: {
-        lat: Number,
-        long: Number
+        lat: {type: Number, required: true},
+        long: {type: Number, required: true}
     },
     phone: String,
     address: {
-        line_1: String,
-        line_2: String,
-        city_village: String,
-        state: String,
-        pin_code: Number
+        line_1: {type: String, required: true},
+        line_2: {type: String, required: true},
+        city_village: {type: String, required: true},
+        state: {type: String, required: true},
+        pin_code: {type: String, required: true}
     }
 })
 
