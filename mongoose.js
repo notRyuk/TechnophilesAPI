@@ -29,14 +29,14 @@ const UserSchema = new Schema({
 })
 
 const BlogSchema = new Schema({
-    _id: {type: String, required: true},
+    _id: String,
     name: {type: String, required: true},
     description: {type: String, required: false},
     content: {type: String, required: true}
 })
 
 const NGOSchema = new Schema({
-    _id: {type: String, required: true},
+    _id: String,
     name: {type: String, required: true},
     timings: {
         start: {type: String, required: true},
