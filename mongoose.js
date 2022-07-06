@@ -52,7 +52,7 @@ const NGOSchema = new Schema({
         line_2: {type: String, required: true},
         city_village: {type: String, required: true},
         state: {type: String, required: true},
-        pin_code: {type: String, required: true}
+        pin_code: {type: Number, required: true}
     }
 })
 
