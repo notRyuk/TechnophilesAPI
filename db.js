@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 
 
+import { __globals } from "./helpers.js";
 import { user, blog, ngo, UserBlogSchema } from "./mongoose.js";
 import { DB_URL } from "./config.js";
 
-mongoose.Promise = global.Promise
 
 Object.prototype.keys = () => Object.keys(this)
 Object.prototype.values = () => Object.values(this)
@@ -18,6 +18,8 @@ try {
 catch {
     console.log("Not able to connect to the database")
 }
+
+
 
 class CollectionObject {
     constructor(id, col) {
@@ -100,6 +102,17 @@ class UserObject extends CollectionObject {
         this.encryption = encryption
         this.email = email
         this.blogs = blogs
+
+        this.doc = {
+            id: this.id,
+            name: {
+                first: this.firstName,
+                last: this.lastName,
+            },
+            email: this.email,
+            encryption: this.encryption,
+            blogs: this.blogs
+        }
     }
 
     async createUser() {
@@ -117,6 +130,13 @@ class UserObject extends CollectionObject {
                 status: 404,
                 error: "BadRequest! The given email is not valid!",
                 comment: "Use static method to change the email or dynamically change the email if not valid!"
+            }
+        }
+        if(this.usernameAlreadyExists(this.id)) {
+            return {
+                status: 404,
+                error: "BadRequest! The provided username already exists.",
+                comment: "Use a different username"
             }
         }
         var __user = await (new user({
@@ -140,6 +160,11 @@ class UserObject extends CollectionObject {
         )
     }
     
+    /**
+     * 
+     * @param {String} newEmail New email of the user to update in the database
+     * @returns UserObject
+     */
     async updateEmail(newEmail) {
         var __user = await this.verify()
         if(!__user) {
@@ -156,10 +181,84 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("email", newEmail).save())._doc
         this.__removeVersionInfo(__user)
-        console.log(__user)
         this.email = newEmail
+        return this
+    }
+
+    /**
+     * 
+     * @param {String} newEncryption New password of the user to be updated in the database
+     * @returns UserObject
+     */
+    async updateEncryption(newEncryption) {
+        var __user = await this.verify()
+        if(!__user) {
+            return {
+                status: 400,
+                comment: "The requested id is not in the database"
+            }
+        }
+        __user = (await __user.set("encryption", newEncryption).save())._doc
+        this.__removeVersionInfo(__user)
+        this.encryption = newEncryption
+        return this
+    }
+
+    /**
+     * 
+     * @param {String} newFirstName New first name of the user to be saved in the database
+     * @param {String} newLastName New last name of the user to be saved in the database
+     * @returns UserObject
+     */
+    async updateName(newFirstName, newLastName) {
+        var __user = await this.verify()
+        if(!__user) {
+            return {
+                status: 400,
+                comment: "The requested id is not in the database"
+            }
+        }
+        var newName = {
+            first: this.firstName,
+            last: this.lastName
+        }
+        if(newFirstName && newFirstName.length > 0) {
+            newName.first = newFirstName
+        }
+        if(newLastName && newLastName.length > 0) {
+            newName.last = newLastName
+        }
+        __user = (await __user.set("name", newName).save())._doc
+        this.__removeVersionInfo(__user)
+        this.firstName = _doc.name.first
+        this.lastName = _doc.name.last
+        return this
+    }
+
+    usernameAlreadyExists(username) {
+        return __globals.users[username[0]].includes(username)
+    }
+
+    async updateUserName(newUserName) {
+        var __user = await this.verify()
+        if(!__user) {
+            return {
+                status: 400,
+                comment: "The requested id is not in the database"
+            }
+        }
+        if(this.id === newUserName) {
+            return this
+        }
+        if(this.usernameAlreadyExists()) {
+            return {
+                status: 404,
+                comment: "Bad Request! The provided new user name already exists in the database."
+            }
+        }
+        __user = (await __user.set("_id", newUserName).save())._doc
         return this
     }
 }
 
-console.log(await new UserObject("1", "Test", "Test", "Alpha", "abc@def.ghi", []).updateEmail("lambda.epsilon@beta.com"))
+console.log((await new UserObject("beta", "Test", "Test", "Alpha", "abc@def.ghi", []).createUser()).doc)

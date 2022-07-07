@@ -13,7 +13,7 @@ const UserSchema = new Schema({
     _id: String,
     name: {
         first: {type: String, required: true},
-        last: {type: String, required: true}
+        last: {type: String, required: true, default: ""}
     },
     encryption: {type: String, required: true},
     email: {type: String, required: true},
