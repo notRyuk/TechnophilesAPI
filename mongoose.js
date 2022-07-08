@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const model = mongoose.model
 
 const UserBlogSchema = {
-    id: String,
+    _id: String,
     name: String,
     description: String
 }
@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     email: {type: String, required: true},
     blogs: {
         type: [{
-            id: {type: String, required: true},
+            _id: {type: String, required: true},
             name: {type: String, required: true},
             description: {type: String, required: true}
         }], 

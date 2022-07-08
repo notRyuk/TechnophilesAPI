@@ -115,10 +115,11 @@ class UserObject extends CollectionObject {
         }
     }
 
-    async createUser() {
+    async create() {
         if(await this.verify()) {
             return new UserObject(
                 this.id,
+                this.firstName,
                 this.lastName,
                 this.encryption,
                 this.email,
@@ -151,12 +152,12 @@ class UserObject extends CollectionObject {
         var __user = __user._doc
         this.__removeVersionInfo(__user)
         return new UserObject(
-            __user.id,
-            __user.firstName,
-            __user.lastName,
+            __user._id,
+            __user.name.first,
+            __user.name.last,
             __user.encryption,
             __user.email,
-            []
+            __user.blogs
         )
     }
     
@@ -181,8 +182,14 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("email", newEmail).save())._doc
         this.__removeVersionInfo(__user)
-        this.email = newEmail
-        return this
+        return new UserObject(
+            __user._id,
+            __user.name.first,
+            __user.name.last,
+            __user.encryption,
+            __user.email,
+            __user.blogs
+        )
     }
 
     /**
@@ -200,8 +207,14 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("encryption", newEncryption).save())._doc
         this.__removeVersionInfo(__user)
-        this.encryption = newEncryption
-        return this
+        return new UserObject(
+            __user._id,
+            __user.name.first,
+            __user.name.last,
+            __user.encryption,
+            __user.email,
+            __user.blogs
+        )
     }
 
     /**
@@ -230,13 +243,19 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("name", newName).save())._doc
         this.__removeVersionInfo(__user)
-        this.firstName = _doc.name.first
-        this.lastName = _doc.name.last
-        return this
+        return new UserObject(
+            __user._id,
+            __user.name.first,
+            __user.name.last,
+            __user.encryption,
+            __user.email,
+            __user.blogs
+        )
     }
 
     usernameAlreadyExists(username) {
-        return __globals.users[username[0]].includes(username)
+        console.log(__globals.users)
+        return __globals.users[username[0].toString()].includes(username)
     }
 
     async updateUserName(newUserName) {
@@ -250,15 +269,144 @@ class UserObject extends CollectionObject {
         if(this.id === newUserName) {
             return this
         }
-        if(this.usernameAlreadyExists()) {
+        if(this.usernameAlreadyExists(newUserName)) {
             return {
                 status: 404,
                 comment: "Bad Request! The provided new user name already exists in the database."
             }
         }
-        __user = (await __user.set("_id", newUserName).save())._doc
-        return this
+        await this.delete()
+        __user = new UserObject(
+            __user._id,
+            __user.name.first,
+            __user.name.last,
+            __user.encryption,
+            __user.email,
+            __user.blogs
+        )
+        return await __user.create()
+    }
+
+    async delete() {
+        var __user = await this.verify()
+        if(!__user) {
+            return {
+                status: 400,
+                comment: "The requested id is not in the database"
+            }
+        }
+        await this.col.findByIdAndDelete(this.id)
+    }
+
+    extractBlogIds(user) {
+        return user.blogs.map(__blog => __blog._id)
+    }
+
+    async updateBlog(id, newName, newDescription) {
+        var __user = await this.verify()
+        if(!__user) {
+            return {
+                status: 400,
+                comment: "The requested id is not in the database"
+            }
+        }
+        var __blog_ids = this.extractBlogIds(__user)
+        if(!__blog_ids.includes(id)) {
+            return {
+                status: 404,
+                comment: "BadRequest! There no such blog written by this user."
+            }
+        }
+        var __blog = __user.blogs[__blog_ids.indexOf(id)]
+        if(!(!newName || newName.length === 0)) {
+            __blog.name = newName
+        }
+        if(!(!newDescription || newDescription.length === 0)) {
+            __blog.description = newDescription
+        }
+        __user = (await __user.set("blogs", __user.blogs).save())._doc
+        return new UserObject(
+            __user._id,
+            __user.name.first,
+            __user.name.last,
+            __user.encryption,
+            __user.email,
+            __user.blogs
+        )
+    }
+
+    async newBlog(name, description) {
+        var __user = await this.verify()
+        if(!__user) {
+            return {
+                status: 400,
+                comment: "The requested id is not in the database"
+            }
+        }
+        var __doc = {
+            _id: this.id+"__blog__"+(__user.blogs.length+1),
+            name: name
+        }
+        if(description) {
+            __doc.description = description
+        }
+        __user.blogs.push(__doc)
+        __user = (await __user.set("blogs", __user.blogs).save())._doc
+        return new UserObject(
+            __user._id,
+            __user.name.first,
+            __user.name.last,
+            __user.encryption,
+            __user.email,
+            __user.blogs
+        )
+    }
+
+    async deleteBlog(id) {
+        var __user = await this.verify()
+        if(!__user) {
+            return {
+                status: 400,
+                comment: "The requested id is not in the database"
+            }
+        }
+        var __blog_ids = this.extractBlogIds(__user)
+        if(!__blog_ids.includes(id)) {
+            return {
+                status: 404,
+                comment: "BadRequest! There no such blog written by this user."
+            }
+        }
+        __user.blogs.splice(__blog_ids.indexOf(id), 1)
+        __user = (await __user.set("blogs", __user.blogs).save())._doc
+        return new UserObject(
+            __user._id,
+            __user.name.first,
+            __user.name.last,
+            __user.encryption,
+            __user.email,
+            __user.blogs
+        )
     }
 }
 
-console.log((await new UserObject("beta", "Test", "Test", "Alpha", "abc@def.ghi", []).createUser()).doc)
+
+var firstUser = new UserObject(
+    "user1", "First Name of User1", "Last name of user1",
+    "encryption of user1", "email.user1@domain.com", []
+)
+
+// setTimeout(async () => {
+//     firstUser = await firstUser.create()
+// }, 4000)
+
+setImmediate(async () => {
+    firstUser = await firstUser.newBlog("Blog1", "Blog1 description")
+}, 0)
+
+setImmediate(async () => {
+    firstUser = await firstUser.newBlog("Blog2", "Blog2 des")
+}, 0)
+
+
+console.log(firstUser.doc)

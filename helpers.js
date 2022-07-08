@@ -20,16 +20,20 @@ const createLowerCaseObject = () => {
 
 class Globals {
     constructor() {
-        this.users = (async () => await this.updateUsers())()
+        this.users = this.updateUsers()
     }
 
-    updateUsers = async () => {
-        var __users = (await user.find()).map(__user => __user._id)
-        // console.log(__users)
+    updateUsers = () => {
         var userObject = createLowerCaseObject()
-        for(var __user of __users) {
-            userObject[__user[0]].push(__user)
-        }
+        user.find({}, (err, __users) => {
+            if(err) return err
+            if(__users) {
+                __users = __users.map(__user => __user._id)
+                for(var __user of __users) {
+                    userObject[__user[0]].push(__user)
+                }
+            }
+        })
         return userObject
     }
 
