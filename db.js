@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-
 import { __globals } from "./helpers.js";
 import { user, blog, ngo, UserBlogSchema } from "./mongoose.js";
 import { DB_URL } from "./config.js";
@@ -151,6 +150,7 @@ class UserObject extends CollectionObject {
         })).save()
         var __user = __user._doc
         this.__removeVersionInfo(__user)
+        __globals.addNewUserToCol(__user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -182,6 +182,7 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("email", newEmail).save())._doc
         this.__removeVersionInfo(__user)
+        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -207,6 +208,7 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("encryption", newEncryption).save())._doc
         this.__removeVersionInfo(__user)
+        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -243,6 +245,7 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("name", newName).save())._doc
         this.__removeVersionInfo(__user)
+        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -276,15 +279,16 @@ class UserObject extends CollectionObject {
             }
         }
         await this.delete()
-        __user = new UserObject(
+        __user = await new UserObject(
             __user._id,
             __user.name.first,
             __user.name.last,
             __user.encryption,
             __user.email,
             __user.blogs
-        )
-        return await __user.create()
+        ).create()
+        __globals.updateUserInCol(__user._id, __user)
+        return __user
     }
 
     async delete() {
@@ -296,6 +300,17 @@ class UserObject extends CollectionObject {
             }
         }
         await this.col.findByIdAndDelete(this.id)
+        .then(data => {
+            if(data) {
+                __globals.deleteUserFromCol(this.id)
+            }
+        })
+        .catch(_ => {
+            return {
+                status: 404,
+                comment: "BadRequest! The id provided is not present in the database."
+            }
+        })
     }
 
     extractBlogIds(user) {
@@ -325,6 +340,7 @@ class UserObject extends CollectionObject {
             __blog.description = newDescription
         }
         __user = (await __user.set("blogs", __user.blogs).save())._doc
+        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -352,6 +368,7 @@ class UserObject extends CollectionObject {
         }
         __user.blogs.push(__doc)
         __user = (await __user.set("blogs", __user.blogs).save())._doc
+        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -379,6 +396,7 @@ class UserObject extends CollectionObject {
         }
         __user.blogs.splice(__blog_ids.indexOf(id), 1)
         __user = (await __user.set("blogs", __user.blogs).save())._doc
+        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -387,6 +405,32 @@ class UserObject extends CollectionObject {
             __user.email,
             __user.blogs
         )
+    }
+
+    findAll() {
+        return __globals.user_col
+    }
+
+    findById(id) {
+        if(!__globals[id[0]].includes(id)) {
+            return {
+                status: 404,
+                comment: "Id not found."
+            }
+        }
+        return __globals.user_col[__globals.user_col.map(__u => __u._id).indexOf(id)]
+    }
+
+    findByFirstName(firstName) {
+        return __globals.user_col.map(__u => __u.name.first).filter(e => e === firstName)
+    }
+
+    findByLastName(lastName) {
+        return __globals.user_col.map(__u => __u.name.last).filter(e => e === lastName)
+    }
+
+    findByFullName(name) {
+        return __globals.user_col.map(__u => __u.name.first+" "+__u.name.last).filter(e => e === name)
     }
 }
 
@@ -400,13 +444,13 @@ var firstUser = new UserObject(
 //     firstUser = await firstUser.create()
 // }, 4000)
 
-setImmediate(async () => {
-    firstUser = await firstUser.newBlog("Blog1", "Blog1 description")
-}, 0)
+// setImmediate(async () => {
+//     firstUser = await firstUser.newBlog("Blog1", "Blog1 description")
+// }, 0)
 
-setImmediate(async () => {
-    firstUser = await firstUser.newBlog("Blog2", "Blog2 des")
-}, 0)
+// setImmediate(async () => {
+//     firstUser = await firstUser.newBlog("Blog2", "Blog2 des")
+// }, 0)
 
 
-console.log(firstUser.doc)
+console.log(firstUser.findAll())
