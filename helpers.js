@@ -1,5 +1,7 @@
-import { user } from "./mongoose.js"
+import { user } from "./mongoose.js";
+import NodeCache from "node-cache";
 
+const cache = new NodeCache({stdTTL: 0})
 
 const lowerCase = (() => {
     var i = 97
@@ -18,33 +20,53 @@ const createLowerCaseObject = () => {
     return obj
 }
 
+
 class Globals {
     constructor() {
-        setImmediate(() => this.updateUsers(), 0)
-        // this.users = __updates[0]
-        // this.user_col = __updates[1]
+        setImmediate(() => {
+            var userObject = createLowerCaseObject()
+            var users = []
+            user.find({}, (err, __users) => {
+                if(err) return err
+                if(__users) {
+                    users = __users
+                    __users = __users.map(__user => __user._id)
+                    for(var __user of __users) {
+                        delete __user.__v
+                        userObject[__user[0]].push(__user)
+                    }
+                }
+            })
+            this.users = userObject
+            this.user_col = users
+        })
     }
 
-    updateUsers = () => {
-        var userObject = createLowerCaseObject()
-        var users = []
-        user.find({}, (err, __users) => {
-            if(err) return err
-            if(__users) {
-                this.user_col = __users
-                __users = __users.map(__user => __user._id)
-                for(var __user of __users) {
-                    delete __user.__v
-                    users.push(__user)
-                    userObject[__user[0]].push(__user)
-                }
-                this.users = userObject
-                this.user_col = users
-                console.log(this.users)
-            }
-        })
-        return [userObject, users]
-    }
+    // updateUsers = () => {
+    //     var userObject = createLowerCaseObject()
+    //     var users = []
+    //     user.find({}, (err, __users) => {
+    //         if(err) return err
+    //         if(__users) {
+    //             console.log("__users", __users)
+    //             users.push(__users)
+    //             __users = __users.map(__user => __user._id)
+    //             // console.log(__users)
+    //             for(var __user of __users) {
+    //                 delete __user.__v
+    //                 userObject[__user[0]].push(__user)
+    //             }
+    //             // this.users = userObject
+    //             // this.user_col = users
+    //             // console.log(this.users)
+    //             cache.set("users", userObject)
+    //             cache.set("user_col", users)
+    //             console.log("users", userObject)
+    //             console.log("user_col", users)
+    //             return new Globals(userObject, users)
+    //         }
+    //     })
+    // }
 
     addNewUser(username) {
         this.users[username[0]].push(username)
@@ -79,6 +101,7 @@ class Globals {
         this.user_col.splice(this.user_col.map(e => e._id).indexOf(id), 1)
     }
 }
+
 
 const __globals = new Globals()
 

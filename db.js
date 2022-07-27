@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-import { __globals } from "./helpers.js";
 import { user, blog, ngo, UserBlogSchema } from "./mongoose.js";
 import { DB_URL } from "./config.js";
 
@@ -42,12 +41,8 @@ class CollectionObject {
      * 
      * @returns Array<User|Blog|NGO> Objects
      */
-    async findAll() {
-        var objects = await this.col.find()
-        for(var obj of objects) {
-            this.__removeVersionInfo(obj)
-        }
-        return objects
+    async findAll() { 
+        return await this.col.find()
     }
 
     /**
@@ -62,12 +57,7 @@ class CollectionObject {
     }
 
     async extractUserNames() {
-        var objects = await this.col.find()
-        var usernames = []
-        for(var obj of objects) {
-            usernames.push(obj._id)
-        }
-        return usernames
+        return (await this.col.find()).map(__doc => __doc._id)
     }
 
     /**
@@ -132,7 +122,7 @@ class UserObject extends CollectionObject {
                 comment: "Use static method to change the email or dynamically change the email if not valid!"
             }
         }
-        if(this.usernameAlreadyExists(this.id)) {
+        if(await this.usernameAlreadyExists(this.id)) {
             return {
                 status: 404,
                 error: "BadRequest! The provided username already exists.",
@@ -148,9 +138,8 @@ class UserObject extends CollectionObject {
             encryption: this.encryption,
             email: this.email
         })).save()
-        var __user = __user._doc
+        __user = __user._doc
         this.__removeVersionInfo(__user)
-        __globals.addNewUserToCol(__user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -182,7 +171,6 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("email", newEmail).save())._doc
         this.__removeVersionInfo(__user)
-        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -208,7 +196,6 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("encryption", newEncryption).save())._doc
         this.__removeVersionInfo(__user)
-        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -245,7 +232,6 @@ class UserObject extends CollectionObject {
         }
         __user = (await __user.set("name", newName).save())._doc
         this.__removeVersionInfo(__user)
-        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -256,9 +242,9 @@ class UserObject extends CollectionObject {
         )
     }
 
-    usernameAlreadyExists(username) {
-        console.log(__globals.users)
-        return __globals.users[username[0].toString()].includes(username)
+    async usernameAlreadyExists(username) {
+        // console.log(__globals.users)
+        return (await this.findAll()).map(__user => __user._id).includes(username)
     }
 
     async updateUserName(newUserName) {
@@ -272,7 +258,7 @@ class UserObject extends CollectionObject {
         if(this.id === newUserName) {
             return this
         }
-        if(this.usernameAlreadyExists(newUserName)) {
+        if(await this.usernameAlreadyExists(newUserName)) {
             return {
                 status: 404,
                 comment: "Bad Request! The provided new user name already exists in the database."
@@ -287,7 +273,6 @@ class UserObject extends CollectionObject {
             __user.email,
             __user.blogs
         ).create()
-        __globals.updateUserInCol(__user._id, __user)
         return __user
     }
 
@@ -302,7 +287,7 @@ class UserObject extends CollectionObject {
         await this.col.findByIdAndDelete(this.id)
         .then(data => {
             if(data) {
-                __globals.deleteUserFromCol(this.id)
+                return __user
             }
         })
         .catch(_ => {
@@ -340,7 +325,6 @@ class UserObject extends CollectionObject {
             __blog.description = newDescription
         }
         __user = (await __user.set("blogs", __user.blogs).save())._doc
-        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -368,7 +352,6 @@ class UserObject extends CollectionObject {
         }
         __user.blogs.push(__doc)
         __user = (await __user.set("blogs", __user.blogs).save())._doc
-        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -396,7 +379,6 @@ class UserObject extends CollectionObject {
         }
         __user.blogs.splice(__blog_ids.indexOf(id), 1)
         __user = (await __user.set("blogs", __user.blogs).save())._doc
-        __globals.updateUserInCol(__user._id, __user)
         return new UserObject(
             __user._id,
             __user.name.first,
@@ -407,30 +389,20 @@ class UserObject extends CollectionObject {
         )
     }
 
-    findAll() {
-        return __globals.user_col
+    async findAll() {
+        return await this.findAll()
     }
 
-    findById(id) {
-        if(!__globals[id[0]].includes(id)) {
-            return {
-                status: 404,
-                comment: "Id not found."
-            }
-        }
-        return __globals.user_col[__globals.user_col.map(__u => __u._id).indexOf(id)]
+    async findByFirstName(firstName) {
+        return (await this.col.find({})).filter(e => e.name.first === firstName)
     }
 
-    findByFirstName(firstName) {
-        return __globals.user_col.map(__u => __u.name.first).filter(e => e === firstName)
+    async findByLastName(lastName) {
+        return (await this.col.find({})).filter(e => e.name.last === lastName)
     }
 
-    findByLastName(lastName) {
-        return __globals.user_col.map(__u => __u.name.last).filter(e => e === lastName)
-    }
-
-    findByFullName(name) {
-        return __globals.user_col.map(__u => __u.name.first+" "+__u.name.last).filter(e => e === name)
+    async findByFullName(name) {
+        return (await this.col.find({})).filter(e => e.name.first + " " + e.name.last === name)
     }
 }
 
@@ -453,4 +425,4 @@ var firstUser = new UserObject(
 // }, 0)
 
 
-console.log(firstUser.findAll())
+console.log(await firstUser.findByFirstName("Test1"))
