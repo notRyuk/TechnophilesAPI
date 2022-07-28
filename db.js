@@ -409,6 +409,13 @@ class UserObject extends CollectionObject {
 }
 
 class BlogObject extends CollectionObject {
+    /**
+     * 
+     * @param {String} id The ID of the blog post
+     * @param {String} name The name or title of the blog post
+     * @param {String} description A short description of the blog post saying about the content
+     * @param {String} content The main content of the blog post
+     */
     constructor(id, name, description, content) {
         super(id, blog)
 
@@ -425,7 +432,7 @@ class BlogObject extends CollectionObject {
         }
     }
 
-    async verifyUser() {
+    async __verifyUser() {
         var __user = this.id.split("__")
         if(
             (__user.length !== 3) ||
@@ -439,12 +446,16 @@ class BlogObject extends CollectionObject {
         return (await new UserObject(__user[0], "", "", "", "", []).verify())
     }
 
+    /**
+     * Takes the input from the constructor and
+     * @returns BlogObject
+     */
     async create() {
         var __blog = await this.verify()
         if(__blog) {
             return new BlogObject(__blog._id, __blog.name, __blog.description, __blog.content)
         }
-        var __user = await this.verifyUser()
+        var __user = await this.__verifyUser()
         if(!__user || __user.status === 404) {
             return {
                 status: 404,
@@ -495,6 +506,13 @@ class BlogObject extends CollectionObject {
         }
     }
 
+    /**
+     * This function if used for updating the blog
+     * @param {String} newName The new name or title of the blog post if not changed then pass empty string
+     * @param {String} newDescription The new description of the blog post if not changed then just pass the old description
+     * @param {String} newContent The updated content of the blog post if not changed then pass empty string
+     * @returns BlogObject
+     */
     async update(newName, newDescription, newContent) {
         var __blog = await this.verify()
         if(!__blog) {
@@ -503,7 +521,7 @@ class BlogObject extends CollectionObject {
                 comment: "No such blog found in the database!"
             }
         }
-        var __user = await this.verifyUser()
+        var __user = await this.__verifyUser()
         if(!__user || __user.status === 404) {
             return {
                 status: 404,
@@ -546,7 +564,10 @@ class BlogObject extends CollectionObject {
         return new BlogObject(__blog._id, __blog.name, __blog.description || "", __blog.content)
     }
 
-
+    /**
+     * The inputs for this function are taken from the constructor and 
+     * @returns blog schema
+     */
     async delete() {
         var __blog = await this.verify()
         if(!__blog) {
@@ -555,7 +576,7 @@ class BlogObject extends CollectionObject {
                 comment: "No such blog found in the database!"
             }
         }
-        var __user = await this.verifyUser()
+        var __user = await this.__verifyUser()
         if(!__user || __user.status === 404) {
             return {
                 status: 404,
@@ -599,6 +620,16 @@ class BlogObject extends CollectionObject {
             }
         }
         return this.doc
+    }
+
+    /**
+     * A search function for finding the blogs
+     * The search returns based on names, descriptions and content matching
+     * @param {String} key The key to search in the names
+     * @returns BlogObject[]
+     */
+    async findBySimilarity(key) {
+        return null
     }
 }
 
