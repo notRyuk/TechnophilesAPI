@@ -105,14 +105,15 @@ class UserObject extends CollectionObject {
     }
 
     async create() {
-        if(await this.verify()) {
+        var __user = await this.verify()
+        if(__user) {
             return new UserObject(
-                this.id,
-                this.firstName,
-                this.lastName,
-                this.encryption,
-                this.email,
-                this.blogs
+                __user._id,
+                __user.first.name,
+                __user.last.name,
+                __user.encryption,
+                __user.email,
+                __user.blogs
             )
         }
         if(!this.isEmailValid(this.email)) {
@@ -129,7 +130,7 @@ class UserObject extends CollectionObject {
                 comment: "Use a different username"
             }
         }
-        var __user = await (new user({
+        __user = await (new user({
             _id: this.id,
             name: {
                 first: this.firstName,
@@ -244,7 +245,7 @@ class UserObject extends CollectionObject {
 
     async usernameAlreadyExists(username) {
         // console.log(__globals.users)
-        return (await this.findAll()).map(__user => __user._id).includes(username)
+        return Boolean((await this.findAll()).filter(__user => __user._id === username).length)
     }
 
     async updateUserName(newUserName) {
@@ -287,13 +288,14 @@ class UserObject extends CollectionObject {
         await this.col.findByIdAndDelete(this.id)
         .then(data => {
             if(data) {
+                this.__removeVersionInfo(__user)
                 return __user
             }
         })
         .catch(_ => {
             return {
                 status: 404,
-                comment: "BadRequest! The id provided is not present in the database."
+                comment: "It seems that there is a problem with the database! Try again later!"
             }
         })
     }
@@ -406,11 +408,204 @@ class UserObject extends CollectionObject {
     }
 }
 
+class BlogObject extends CollectionObject {
+    constructor(id, name, description, content) {
+        super(id, blog)
 
-var firstUser = new UserObject(
-    "user1", "First Name of User1", "Last name of user1",
-    "encryption of user1", "email.user1@domain.com", []
-)
+        this.id = id
+        this.name = name
+        this.description = description
+        this.content = content
+
+        this.doc = {
+            id: id,
+            name: name,
+            description: description,
+            content: content
+        }
+    }
+
+    async verifyUser() {
+        var __user = this.id.split("__")
+        if(
+            (__user.length !== 3) ||
+            !(__user.length === 3 && __user[1] === "blog" && /[0-9]+/.test(__user[2]))
+        ) {
+            return {
+                status: 404,
+                comment: "The ID of the blog is not recognized."
+            }
+        }
+        return (await new UserObject(__user[0], "", "", "", "", []).verify())
+    }
+
+    async create() {
+        var __blog = await this.verify()
+        if(__blog) {
+            return new BlogObject(__blog._id, __blog.name, __blog.description, __blog.content)
+        }
+        var __user = await this.verifyUser()
+        if(!__user || __user.status === 404) {
+            return {
+                status: 404,
+                comment: "The ID of the blog does not have the corresponding user."
+            }
+        }
+        __user = new UserObject(
+            __user._id, 
+            __user.name.first,  
+            __user.name.last, 
+            __user.encryption,
+            __user.email, 
+            __user.blogs
+        )
+        if(!this.name || this.name.length === 0) {
+            return {
+                status: 404,
+                comment: "Cannot create a blog without its name!"
+            }
+        }
+        if(!this.content || this.content.length === 0) {
+            return {
+                status: 404,
+                comment: "Cannot create a blog without its content!"
+            }
+        }
+        __blog = (await new blog({
+            _id: this.id,
+            name: this.name,
+            description: this.description,
+            content: this.content
+        }).save())
+        if(!__blog) {
+            return {
+                status: 404,
+                comment: "An error occurred during the creation of the blog!"
+            }
+        } 
+        __blog = __blog._doc
+        var __blogs = __user.blogs.length
+        __user = await __user.newBlog(this.name, this.description || "")
+        if(__user.blogs.length-__blogs === 1) {
+            return new BlogObject(__blog._id, __blog.name, __blog.description, __blog.content)
+        }
+        return {
+            status: 404,
+            comment: "The blog did not get created due to internal server issue! Try again after sometime!"
+        }
+    }
+
+    async update(newName, newDescription, newContent) {
+        var __blog = await this.verify()
+        if(!__blog) {
+            return {
+                status: 404,
+                comment: "No such blog found in the database!"
+            }
+        }
+        var __user = await this.verifyUser()
+        if(!__user || __user.status === 404) {
+            return {
+                status: 404,
+                comment: "The ID of the blog does not have the corresponding user."
+            }
+        }
+        __user = new UserObject(
+            __user._id, 
+            __user.name.first,  
+            __user.name.last, 
+            __user.encryption,
+            __user.email, 
+            __user.blogs
+        )
+        var __new_blog = {
+            name: __blog.name,
+            description: __blog.description || "",
+            content: __blog.content
+        }
+        if(newName && newName.length > 0) {
+            __new_blog.name = newName
+        }
+        if(newContent && newContent.length > 0) {
+            __new_blog.content = newContent
+        }
+        if(newDescription.length === 0 || !newDescription) {
+            delete __new_blog.description
+        }
+        else if(newDescription.length > 0) {
+            __new_blog.description = newDescription
+        }
+        __blog = (await __blog.set(__new_blog).save())._doc
+        if(!__blog) {
+            return {
+                status: 404,
+                comment: "The database responded with an error try fixing your method!"
+            }
+        }
+        __user = await __user.updateBlog(__blog._id, __blog.name, __blog.description || "")
+        return new BlogObject(__blog._id, __blog.name, __blog.description || "", __blog.content)
+    }
+
+
+    async delete() {
+        var __blog = await this.verify()
+        if(!__blog) {
+            return {
+                status: 404,
+                comment: "No such blog found in the database!"
+            }
+        }
+        var __user = await this.verifyUser()
+        if(!__user || __user.status === 404) {
+            return {
+                status: 404,
+                comment: "The ID of the blog does not have the corresponding user."
+            }
+        }
+        __user = new UserObject(
+            __user._id, 
+            __user.name.first,  
+            __user.name.last, 
+            __user.encryption,
+            __user.email, 
+            __user.blogs
+        )
+        __blog = await this.col.findByIdAndDelete(__blog._id)
+        .then(data => {
+            if(data) {
+                this.__removeVersionInfo(__blog)
+                return __blog
+            }
+        })
+        .catch(_ => {
+            return {
+                status: 404,
+                comment: "It seems that there is an error contacting the database! Try again after sometime."
+            }
+        })
+        if(!__blog || __blog.status === 404) {
+            return {
+                status: 404,
+                comment: "It seems that there is an error contacting the database! Try again after sometime."
+            }
+        }
+        var __blogs = __user.blogs.length
+        __user = await __user.deleteBlog(__blog._id)
+        if(!__user || __blogs-__user.blogs.length !== 1) {
+            __blog = await new BlogObject(__blog._id, __blog.name, __blog.description, __blog.content).create()
+            return {
+                status: 404,
+                comment: "It seems that there is an error contacting the database! Try again after sometime."
+            }
+        }
+        return this.doc
+    }
+}
+
+// var firstUser = new UserObject(
+//     "user1", "First Name of User1", "Last name of user1",
+//     "encryption of user1", "email.user1@domain.com", []
+// )
 
 // setTimeout(async () => {
 //     firstUser = await firstUser.create()
@@ -425,4 +620,27 @@ var firstUser = new UserObject(
 // }, 0)
 
 
-console.log(await firstUser.findByFirstName("Test1"))
+// console.log(await firstUser.findByFirstName("Test1"))
+
+var firstBlog = new BlogObject(
+    "user1__blog__1", 
+    "This is the first blog by me", 
+    "This is the description of my first blog", 
+    "This is the content of my first blog"
+)
+
+console.log(await firstBlog.update(
+    "This is the first edited blog by me", 
+    "This is the first edited description", 
+    "This is the first edited content of my first blog"
+))
+
+/*
+
+update(
+    "This is the first edited blog by me", 
+    "This is the first edited description", 
+    "This is the first edited content of my first blog"
+)
+
+*/

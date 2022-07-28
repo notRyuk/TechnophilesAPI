@@ -31,7 +31,7 @@ const UserSchema = new Schema({
 const BlogSchema = new Schema({
     _id: String,
     name: {type: String, required: true},
-    description: {type: String, required: false},
+    description: {type: String, required: false, default: ""},
     content: {type: String, required: true}
 })
 
