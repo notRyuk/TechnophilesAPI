@@ -39,17 +39,19 @@ const NGOSchema = new Schema({
     _id: String,
     name: {type: String, required: true},
     timings: {
-        start: {type: String, required: true},
-        close: {type: String, required: true}
+        start: {type: String, required: true, default: "09:00"},
+        close: {type: String, required: true, default: "18:00"},
+        days: {type: String, required: true, default: "Mon-Sat"}
     },
     location: {
         lat: {type: Number, required: true},
         long: {type: Number, required: true}
     },
     phone: String,
+    email: {type: String, required: true},
     address: {
         line_1: {type: String, required: true},
-        line_2: {type: String, required: true},
+        line_2: {type: String, required: true, default: ""},
         city_village: {type: String, required: true},
         state: {type: String, required: true},
         pin_code: {type: Number, required: true}
