@@ -1,7 +1,5 @@
 import { user } from "./mongoose.js";
-import NodeCache from "node-cache";
 
-const cache = new NodeCache({stdTTL: 0})
 
 const lowerCase = (() => {
     var i = 97
@@ -102,11 +100,50 @@ class Globals {
     }
 }
 
+const stateList = [
+    "Andhra Pradesh",
+    "Arunachal Pradesh",
+    "Assam",
+    "Bihar",
+    "Chhattisgarh",
+    "Goa",
+    "Gujarat",
+    "Haryana",
+    "Himachal Pradesh",
+    "Jammu and Kashmir",
+    "Jharkhand",
+    "Karnataka",
+    "Kerala",
+    "Madhya Pradesh",
+    "Maharashtra",
+    "Manipur",
+    "Meghalaya",
+    "Mizoram",
+    "Nagaland",
+    "Odisha",
+    "Punjab",
+    "Rajasthan",
+    "Sikkim",
+    "Tamil Nadu",
+    "Telangana",
+    "Tripura",
+    "Uttarakhand",
+    "Uttar Pradesh",
+    "West Bengal",
+    "Andaman and Nicobar Islands",
+    "Chandigarh",
+    "Dadra and Nagar Haveli",
+    "Daman and Diu",
+    "Delhi",
+    "Lakshadweep",
+    "Puducherry"
+]
 
 const __globals = new Globals()
 
 export {
     lowerCase,
     createLowerCaseObject,
-    __globals
+    __globals,
+    stateList
 }
