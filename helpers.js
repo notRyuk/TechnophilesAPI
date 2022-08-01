@@ -21,6 +21,12 @@ const createLowerCaseObject = () => {
     return obj
 }
 
+/**
+ * Returns the queries with their start and end index if found in the text
+ * @param {String[]} query A string array consisting of words to be entered as the query
+ * @param {String} text The text within which the queries are to be searched
+ * @returns 
+ */
 const search = async(query, text) => {
     let out = ""
 
