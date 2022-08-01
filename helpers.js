@@ -1,4 +1,7 @@
 import { user } from "./mongoose.js";
+import { promisify } from 'util';
+import { exec as exec1} from 'child_process';
+const exec = promisify(exec1)
 
 
 const lowerCase = (() => {
@@ -18,6 +21,17 @@ const createLowerCaseObject = () => {
     return obj
 }
 
+const search = async(query, text) => {
+    let out = ""
+
+    const child = await exec(`java search "${query}" "${text}"`)
+
+    if(child.stdout) out += child.stdout
+
+    if(child.stderr) out += `stderr: ${child.stderr}`
+
+    return out
+}
 
 class Globals {
     constructor() {
@@ -144,6 +158,7 @@ const __globals = new Globals()
 export {
     lowerCase,
     createLowerCaseObject,
+    search,
     __globals,
     stateList
 }
