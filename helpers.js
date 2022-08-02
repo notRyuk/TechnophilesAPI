@@ -1,4 +1,7 @@
 import { user } from "./mongoose.js";
+import { promisify } from 'util';
+import { exec as exec1} from 'child_process';
+const exec = promisify(exec1)
 
 
 const lowerCase = (() => {
@@ -18,6 +21,23 @@ const createLowerCaseObject = () => {
     return obj
 }
 
+/**
+ * Returns the queries with their start and end index if found in the text
+ * @param {String[]} query A string array consisting of words to be entered as the query
+ * @param {String} text The text within which the queries are to be searched
+ * @returns 
+ */
+const search = async(query, text) => {
+    let out = ""
+
+    const child = await exec(`java search "${query}" "${text}"`)
+
+    if(child.stdout) out += child.stdout
+
+    if(child.stderr) out += `stderr: ${child.stderr}`
+
+    return out
+}
 
 class Globals {
     constructor() {
@@ -144,6 +164,7 @@ const __globals = new Globals()
 export {
     lowerCase,
     createLowerCaseObject,
+    search,
     __globals,
     stateList
 }
