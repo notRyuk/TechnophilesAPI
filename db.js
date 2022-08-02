@@ -1198,6 +1198,7 @@ class NGOObject extends CollectionObject {
      * @param {String} newCityOrVillage The new nearest city or village of the NGO that has to be updated if not changes pass an empty string
      * @param {String} newState The new state of the NGO if changed changed the pin code according the new state if not changed then pass empty string
      * @param {Number} newPinCode The new pin code of the NGO if changed change the state with respect to that if not changed pass 0
+     * @returns NGOObject
      */
     async updateAddress(newLine1, newLine2, newCityOrVillage, newState, newPinCode) {
         if(!this.__verifyPinCode()) {
