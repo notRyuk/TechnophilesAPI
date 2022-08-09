@@ -3,7 +3,7 @@ import axios from "axios";
 
 import { user, blog, ngo, UserBlogSchema } from "./mongoose.js";
 import { DB_URL } from "./config.js";
-import { stateList } from "./helpers.js";
+import { searchBlog, stateList } from "./helpers.js";
 
 
 Object.prototype.keys = () => Object.keys(this)
@@ -54,6 +54,9 @@ class CollectionObject {
      */
     async findById(id) {
         var obj = this.col.findById(id)
+        if(!obj) {
+            return
+        }
         this.__removeVersionInfo(obj)
         return obj
     }
@@ -303,7 +306,7 @@ class UserObject extends CollectionObject {
         if(await this.usernameAlreadyExists(newUserName)) {
             return {
                 status: 404,
-                comment: "Bad Request! The provided new user name already exists in the database."
+                comment: "Bad Request! The provided new username already exists in the database."
             }
         }
         await this.delete()
@@ -326,7 +329,7 @@ class UserObject extends CollectionObject {
                 comment: "The requested id is not in the database"
             }
         }
-        await this.col.findByIdAndDelete(this.id)
+        return await this.col.findByIdAndDelete(this.id)
         .then(data => {
             if(data) {
                 this.__removeVersionInfo(__user)
@@ -430,10 +433,6 @@ class UserObject extends CollectionObject {
             __user.email,
             __user.blogs
         )
-    }
-
-    async findAll() {
-        return await this.findAll()
     }
 
     async findByFirstName(firstName) {
@@ -670,7 +669,23 @@ class BlogObject extends CollectionObject {
      * @returns BlogObject[]
      */
     async findBySimilarity(key) {
-        return null
+        var __blogs = await this.findAll()
+        if(!__blogs || __blogs.length === 0) {
+            return {
+                status: 404,
+                comment: "No blogs found in the database."
+            }
+        }
+        var res = []
+        for(var __blog of __blogs) {
+            if(await searchBlog(
+                __blog.name.toLowerCase(), 
+                key.toLowerCase().split("").filter(__ch => /^[a-z0-9]/i.test(__ch)).join("")
+            )) {
+                res.push(__blog)
+            }
+        }
+        return res
     }
 }
 
@@ -1271,21 +1286,19 @@ class NGOObject extends CollectionObject {
 
 // console.log(await firstUser.findByFirstName("Test1"))
 
-/*
-var firstBlog = new BlogObject(
-    "user1__blog__1", 
-    "This is the first blog by me", 
-    "This is the description of my first blog", 
-    "This is the content of my first blog"
-)
 
-console.log(await firstBlog.update(
-    "This is the first edited blog by me", 
-    "This is the first edited description", 
-    "This is the first edited content of my first blog"
-))
+// var firstBlog = new BlogObject(
+//     "user1__blog__1", 
+//     "This is the first blog by me", 
+//     "This is the description of my first blog", 
+//     "This is the content of my first blog"
+// )
 
-*/
+// console.log("search results for first: ", await firstBlog.findBySimilarity("first"))
+// console.log("search results for None: ", await firstBlog.findBySimilarity("None"))
+
+
+
 
 /*
 
@@ -1297,21 +1310,25 @@ update(
 
 */
 
-var firstNGO = new NGOObject(
-    "test_ngo1",
-    "Test NGO 1 Name",
-    "07:00",
-    "19:00",
-    "Mon-Sun",
-    10,
-    20,
-    "+919898989890",
-    "ngo1@ngo1.com",
-    "Line address of NGO 1",
-    "Line 2 address of NGO 1",
-    "City 1",
-    "Telangana",
-    502001
-)
+// var firstNGO = new NGOObject(
+//     "test_ngo1",
+//     "Test NGO 1 Name",
+//     "07:00",
+//     "19:00",
+//     "Mon-Sun",
+//     10,
+//     20,
+//     "+919898989890",
+//     "ngo1@ngo1.com",
+//     "Line address of NGO 1",
+//     "Line 2 address of NGO 1",
+//     "City 1",
+//     "Telangana",
+//     502001
+// )
 
-console.log(await firstNGO.create())
+// console.log(await firstNGO.create())
+
+export {
+    UserObject, BlogObject, NGOObject, CollectionObject
+}
