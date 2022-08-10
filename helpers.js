@@ -27,15 +27,15 @@ const createLowerCaseObject = () => {
  * @param {String} text The text within which the queries are to be searched
  * @returns 
  */
-const search = async(query, text) => {
-    let out = ""
-
+const searchBlog = async(query, text) => {
+    var out = ""
     const child = await exec(`java search "${query}" "${text}"`)
-
-    if(child.stdout) out += child.stdout
-
-    if(child.stderr) out += `stderr: ${child.stderr}`
-
+    if(child.stdout) {
+        out += child.stdout
+    }
+    if(child.stderr) {
+        out += `stderr: ${child.stderr}`
+    }
     return out
 }
 
@@ -164,7 +164,7 @@ const __globals = new Globals()
 export {
     lowerCase,
     createLowerCaseObject,
-    search,
+    searchBlog,
     __globals,
     stateList
 }
