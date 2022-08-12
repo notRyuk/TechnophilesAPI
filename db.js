@@ -134,7 +134,7 @@ class UserObject extends CollectionObject {
         this.blogs = blogs
 
         this.doc = {
-            id: this.id,
+            _id: this.id,
             name: {
                 first: this.firstName,
                 last: this.lastName,
@@ -311,7 +311,7 @@ class UserObject extends CollectionObject {
         }
         await this.delete()
         __user = await new UserObject(
-            __user._id,
+            newUserName,
             __user.name.first,
             __user.name.last,
             __user.encryption,
@@ -329,19 +329,8 @@ class UserObject extends CollectionObject {
                 comment: "The requested id is not in the database"
             }
         }
-        return await this.col.findByIdAndDelete(this.id)
-        .then(data => {
-            if(data) {
-                this.__removeVersionInfo(__user)
-                return __user
-            }
-        })
-        .catch(_ => {
-            return {
-                status: 404,
-                comment: "It seems that there is a problem with the database! Try again later!"
-            }
-        })
+        var data = await this.col.findByIdAndDelete(this.id)
+        return data
     }
 
     extractBlogIds(user) {
@@ -436,15 +425,19 @@ class UserObject extends CollectionObject {
     }
 
     async findByFirstName(firstName) {
-        return (await this.col.find({})).filter(e => e.name.first === firstName)
+        return (await this.col.find({})).filter(e => e.name.first.toLowerCase().trim() === firstName.toLowerCase().trim())
     }
 
     async findByLastName(lastName) {
-        return (await this.col.find({})).filter(e => e.name.last === lastName)
+        return (await this.col.find({})).filter(e => e.name.last.toLowerCase().trim() === lastName.toLowerCase().trim())
     }
 
     async findByFullName(name) {
-        return (await this.col.find({})).filter(e => e.name.first + " " + e.name.last === name)
+        return (await this.col.find({})).filter(e => (e.name.first.trim() + " " + e.name.last.trim()).toLowerCase() === name.toLowerCase().trim())
+    }
+
+    async findByEmail(email) {
+        return (await this.col.find({})).filter(e => e.email === email)
     }
 }
 
@@ -465,7 +458,7 @@ class BlogObject extends CollectionObject {
         this.content = content
 
         this.doc = {
-            id: id,
+            _id: id,
             name: name,
             description: description,
             content: content
@@ -632,19 +625,7 @@ class BlogObject extends CollectionObject {
             __user.blogs
         )
         __blog = await this.col.findByIdAndDelete(__blog._id)
-        .then(data => {
-            if(data) {
-                this.__removeVersionInfo(__blog)
-                return __blog
-            }
-        })
-        .catch(_ => {
-            return {
-                status: 404,
-                comment: "It seems that there is an error contacting the database! Try again after sometime."
-            }
-        })
-        if(!__blog || __blog.status === 404) {
+        if(!__blog) {
             return {
                 status: 404,
                 comment: "It seems that there is an error contacting the database! Try again after sometime."
@@ -659,7 +640,7 @@ class BlogObject extends CollectionObject {
                 comment: "It seems that there is an error contacting the database! Try again after sometime."
             }
         }
-        return this.doc
+        return __blog
     }
 
     /**
@@ -673,7 +654,7 @@ class BlogObject extends CollectionObject {
         if(!__blogs || __blogs.length === 0) {
             return {
                 status: 404,
-                comment: "No blogs found in the database."
+                comment: "The database refused to connect or there are no blogs on the database."
             }
         }
         var res = []
@@ -741,7 +722,7 @@ class NGOObject extends CollectionObject {
         this.pinCode = pinCode
 
         this.doc = {
-            id: this.id,
+            _id: this.id,
             name: this.name,
             timings: {
                 start: this.startTime,
