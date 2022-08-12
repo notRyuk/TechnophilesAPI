@@ -1,7 +1,7 @@
 import express from "express";
 
 import { PORT } from "./config.js";
-import { UserObject, CollectionObject } from "./db.js";
+import { UserObject, CollectionObject, BlogObject } from "./db.js";
 import { user, blog, ngo } from "./mongoose.js";
 
 const app = express()
@@ -37,7 +37,7 @@ app.get(/^\/(user|blog|ngo)\/(findByID|findAll)$/, async (req, res) => {
     if(path.includes("ngo")) {
         obj = new CollectionObject(body.id, ngo)
     }
-    obj = (await obj.findById(body.id))?path.includes("findByID"):(await obj.findAll())
+    obj = path.includes("findByID")?(await obj.findById(body.id)):(await obj.findAll())
     if(!obj) {
         res.status(404)
         res.send({
@@ -61,7 +61,7 @@ app.post("/user/create", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "firstName", "lastName", "password", "email"]
     for(var i of required) {
-        if(!keys.includes(i) && values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
             res.status(404)
             res.send({
                 status: 404,
@@ -89,7 +89,7 @@ app.post("/user/updateUserName", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token", "newUserName"]
     for(var i of required) {
-        if(!keys.includes(i) && values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
             res.status(404)
             res.send({
                 status: 404,
@@ -149,7 +149,7 @@ app.post("/user/updatePassword", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token", "newPassword"]
     for(var i of required) {
-        if(!keys.includes(i) && values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
             res.status(404)
             res.send({
                 status: 404,
@@ -193,7 +193,7 @@ app.post("/user/updatePassword", async (req, res) => {
         newUser.encryption,
         newUser.email,
         newUser.blogs
-    ).updateEncryption(body.newUserName)) // Enter the param for new encrypted password
+    ).updateEncryption(body.newPassword)) // Enter the param for new encrypted password
     if(newUser.status) {
         res.status(newUser.status)
         res.send(newUser)
@@ -210,7 +210,7 @@ app.post("/user/updateEmail", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token", "email", "newEmail"]
     for(var i of required) {
-        if(!keys.includes(i) && values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
             res.status(404)
             res.send({
                 status: 404,
@@ -273,7 +273,7 @@ app.post("/user/updateName", async (req, res) => {
      */
     var required = ["userName", "token", "name", "newName"]
     for(var i of required) {
-        if(!keys.includes(i) && values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
             res.status(404)
             res.send({
                 status: 404,
@@ -287,8 +287,8 @@ app.post("/user/updateName", async (req, res) => {
         first: body.name.first || "",
         last: body.name.last || ""
     }
-    name.first = body.newName.first?(name.first!==body.newName.first):name.first
-    name.last = body.newName.last?(name.last!==body.newName.last):name.last
+    name.first = (name.first!==body.newName.first)?body.newName.first:name.first
+    name.last = (name.last!==body.newName.last)?body.newName.last:name.last
     var newUser = (await new UserObject(
         body.userName.trim(),
         "",
@@ -330,7 +330,7 @@ app.delete("/user/delete", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token"]
     for(var i of required) {
-        if(!keys.includes(i) && values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
             res.status(404)
             res.send({
                 status: 404,
@@ -340,14 +340,268 @@ app.delete("/user/delete", async (req, res) => {
             return
         }
     }
-
+    var newUser = (await new UserObject(
+        body.userName,
+        "",
+        "",
+        "",
+        "",
+        []
+    ).findById(body.userName))
+    if(!newUser) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The input user is not found in the database.",
+            comment: "Enter a valid username!"
+        })
+        return
+    }
+    newUser = (await new UserObject(
+        newUser._id,
+        newUser.name.first,
+        newUser.name.last,
+        newUser.encryption,
+        newUser.email,
+        newUser.blogs
+    ).delete())
+    if(newUser.status) {
+        res.status(newUser.status)
+        res.send(newUser)
+        return
+    }
+    res.status(200)
+    res.send(newUser)
+    return
 })
+
+app.get("/user/findByName", async (req, res) => {
+    const body = req.body
+    var name = {
+        first: "",
+        last: ""
+    }
+    if(!body.name) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The request body does not have a name key.",
+            comment: "Send a name parameter with first and last keys in it."
+        })
+        return
+    }
+    name.first = body.name.first?body.name.first.trim():""
+    name.last = body.name.last?body.name.last.trim():""
+    if(name.first.trim() === "" && name.last.trim() === "") {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The name object does not have a first name or last name",
+            comment: "Add a first name or last name in the name object with the keys first and last."
+        })
+        return
+    }
+    var newUser = new UserObject()
+    if(name.first.trim() !== "" && (!name.last.trim() || name.last.trim() === "")) {
+        newUser = await newUser.findByFirstName(name.first)
+    }
+    if((!name.first.trim() || name.first.trim() === "") && name.last.trim() !== "") {
+        newUser = await newUser.findByLastName(name.last)
+    }
+    if(name.first.trim() !== "" && name.last.trim() !== "") {
+        newUser = await newUser.findByFullName(name.first.trim() + " " + name.last.trim())
+    }
+    if(!newUser) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The database refused to connect.",
+            comment: "Try reconnecting after sometime or change the database URI"
+        })
+        return
+    }
+    res.status(200)
+    res.send({
+        status: 200,
+        col: newUser
+    })
+})
+
+app.get("/user/findByEmail", async (req, res) => {
+    const body = req.body
+    if(!body.email || body.email.length === 0) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "There is not email parameter in the request body or it is empty.",
+            comment: "Pass a valid email to check."
+        })
+        return
+    }
+    var newUser = new UserObject()
+    if(!newUser.isEmailValid(body.email.trim())) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The entered email is not in a valid format.",
+            comment: "Please enter a valid email with correct format."
+        })
+        return
+    }
+    newUser = await newUser.findByEmail(body.email.trim())
+    if(!newUser) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The database refused to connect.",
+            comment: "Try reconnecting after sometime."
+        })
+        return
+    }
+    res.status(200)
+    res.send({
+        status: 200,
+        col: newUser
+    })
+    return
+})
+
+app.post("/blog/create", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["userName", "name", "description", "content"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a blog."
+            })
+            return
+        }
+    }
+    var newBlog = new BlogObject(body.userName+"__blog__1", "", "", "")
+    var newUser = await newBlog.__verifyUser()
+    if(!newUser) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The mentioned user does not exist in the database",
+            comment: "Try providing a user that actually exists"
+        })
+        return
+    }
+    newBlog = await new BlogObject(
+        newUser._id+"__blog__"+(newUser.blogs.length+1), 
+        body.name, 
+        body.description, 
+        body.content
+    ).create()
+    if(!newBlog) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The database refused to connect.",
+            comment: "Try reconnecting after some time or use a different URL/URI."
+        })
+        return
+    }
+    res.status(newBlog.status || 200)
+    res.send(newBlog.doc || newBlog)
+})
+
+app.post("/blog/update", async (req, res) => {
+    const body = req.body
+    if(!body.id || body.id.trim().length === 0) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The request body does not have a key called id.",
+            comment: "Send the blog id to be updated."
+        })
+        return
+    }
+    var newBlog = {
+        name: (body.newName && body.newName.length > 0)?body.newName:"",
+        description: (body.newDescription && body.newDescription.length > 0)?body.newDescription:"",
+        content: (body.newContent && body.newContent.length > 0)?body.newContent:""
+    }
+    newBlog = await new BlogObject(body.id.trim()).update(newBlog.name, newBlog.description, newBlog.content)
+    if(!newBlog) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The database refused to connect.",
+            comment: "Try reconnecting after some time or use a different URL/URI."
+        })
+        return
+    }
+    res.status(newBlog.status || 200)
+    res.send(newBlog.doc || newBlog)
+})
+
+app.delete("/blog/delete", async (req, res) => {
+    const body = req.body
+    if(!body.id || body.id.trim().length === 0) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The request body does not have a key called id.",
+            comment: "Send the blog id to be updated."
+        })
+        return
+    }
+    var newBlog = await new BlogObject(body.id).delete()
+    if(!newBlog) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The database refused to connect.",
+            comment: "Try reconnecting after some time or use a different URL/URI."
+        })
+        return
+    }
+    res.status(newBlog.status || 200)
+    res.send(newBlog.doc || newBlog)
+})
+
+app.get("/blog/findByName", async (req, res) => {
+    const body = req.body
+    if(!body.key || body.key.trim().length === 0) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The request body does not have a key to search.",
+            comment: "Send the blog id to be updated."
+        })
+        return
+    }
+    var newBlog = await new BlogObject(body.id).delete()
+    if(!newBlog) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: "The database refused to connect.",
+            comment: "Try reconnecting after some time or use a different URL/URI."
+        })
+        return
+    }
+    res.status(newBlog.status || 200)
+    res.send((typeof newBlog !== Array)?newBlog:{status: 200, col: newBlog})
+})
+
+// app.post("/ngo/create", async (req, res) => {
+
+// })
 
 app.get("*", (_, res) => {
     res.status(404)
     res.send({
         status: 404,
-        error: "BadRequest! URL/Path not found!"
+        error: "BadRequest! URL/Path not found!",
+        comment: "Please enter a valid Path."
     })
 })
 
@@ -355,7 +609,17 @@ app.post("*", (_, res) => {
     res.status(404)
     res.send({
         status: 404,
-        error: "BadRequest! URL/Path not found!"
+        error: "BadRequest! URL/Path not found!",
+        comment: "Please enter a valid Path."
+    })
+})
+
+app.delete("*", (_, res) => {
+    res.status(404)
+    res.send({
+        status: 404,
+        error: "BadRequest! URL/Path not found!",
+        comment: "Please enter a valid Path."
     })
 })
 
