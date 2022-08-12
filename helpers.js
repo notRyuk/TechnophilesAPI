@@ -25,7 +25,7 @@ const createLowerCaseObject = () => {
  * Returns the queries with their start and end index if found in the text
  * @param {String} query A string consisting of words to be entered as the query
  * @param {String} text The text within which the queries are to be searched
- * @returns 
+ * @returns String
  */
 const searchBlog = async(query, text) => {
     var out = ""
@@ -37,26 +37,6 @@ const searchBlog = async(query, text) => {
         out += `stderr: ${child.stderr}`
     }
     return out
-}
-
-function List(array) {
-    return new Proxy(array, {
-        get: (target, prop, rec) => {
-            if(prop.split(",").length > 1) {
-                return prop.split(",").map( e => rec[p])
-            }
-            if(prop < 0) {
-                return Reflect.get(target, String(target.length+parseInt(prop, 10), rec))
-            }
-            return Reflect.get(target, prop.at, rec)
-        },
-        set: (target, prop, value, rec) => {
-            if(prop < 0) {
-                return Reflect.set(target, String(target.length+parseInt(prop, 10)), value, rec)
-            }
-            return Reflect.set(target, prop, value, rec)
-        }
-    })
 }
 
 class Tokenizer {

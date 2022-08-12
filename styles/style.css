@@ -1,0 +1,128 @@
+.wrap,
+#main,
+section,
+body,
+.params * {
+  background-color: #1e2227;
+}
+
+.signature-attributes {
+  color: #363062;
+}
+
+.page-title,
+h2,
+h3,
+h5,
+.wrap h3 {
+  color: #e4ad77;
+}
+
+#nav-search,
+#nav-search:active {
+  background-color: #ad979e;
+  border: none;
+  outline: none;
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+}
+
+::placeholder, :-ms-input-placeholder, ::-ms-input-placeholder {
+  font-family: Consolas, Monaco, 'Andale Mono', monospace;
+}
+
+.wrap a,
+.warp {
+  color: #9684ad !important;
+}
+
+h4.name {
+  background-color: #ad979e;
+  box-shadow: none;
+  color: #2b2b47;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.signature,
+.type-signature {
+  color: #2b2b47;
+}
+
+.tag-source,
+.details {
+  border-left-color: #ad979e;
+  color: #ae845b;
+}
+
+.description p {
+  color: #ae845b;
+}
+
+.dummy li a,
+.param-type,
+.param-type a,
+.param-desc {
+  color: #827397 !important;
+  border-bottom-color: #ad979e;
+}
+
+.params,
+.props {
+  color: #e4ad77;
+  font-family: Consolas, Monaco, "Andale Mono", monospace;
+  border: 1px solid #ad979e;
+  border-radius: 0.5rem;
+}
+
+.params .name,
+.params .attributes,
+.params .description,
+.params .name code {
+  color: #ae845b !important;
+  border: none;
+}
+
+.methods li a {
+  border-left-color: #e4ad77;
+}
+
+.wrap {
+  background-color: #1e2227;
+}
+
+footer {
+  color: #827397;
+}
+
+footer a {
+  color: #ae845b;
+}
+
+.params td {
+  border-top: 1px solid #ad979e !important;
+}
+
+.props td {
+  border-top: 1px solid #ad979e !important;
+}
+
+.props code {
+  background: none;
+  color: #ae845b !important;
+}
+
+.props tr {
+  background: none;
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e2227;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ad979e;
+}

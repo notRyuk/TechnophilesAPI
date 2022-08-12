@@ -22,6 +22,12 @@ catch {
 
 
 class CollectionObject {
+
+    /**
+     * The parent class of all the classes in mentioned in the documentation
+     * @param {String} id The ID of document in the collection that is specified
+     * @param {mongoose.Model} col The mongoose model of the Collection that is to be specified
+     */
     constructor(id, col) {
         this.id = id
         this.col = col
@@ -66,7 +72,7 @@ class CollectionObject {
     }
 
     /**
-     * 
+     * Checks if mentioned email is valid according to the international email format.
      * @param {String} email The email ID to check the validation 
      * @returns Boolean
      */
@@ -111,16 +117,29 @@ class CollectionObject {
     }
 }
 
-
+/**
+ * The definition of the miniature of Blog object that is stored in the user collection.
+ * @typedef {Object} UserBlogSchema The miniature version of the blog stored in the user collection for faster access
+ * @property {String} _id The id of the blog that is to be stored.
+ * @property {String} name The name of the blog that is to be stored.
+ * @property {String=} description The description of the blog that is to be stored.
+ */
+/**
+ * The default error object that is used over all the code.
+ * @typedef {Object} Error The default error object
+ * @property {Number} status The HTTP status code of the error
+ * @property {String!} error The error that is generated
+ * @property {String!} comment A possible fix that can be done for the error occurred
+ */
 class UserObject extends CollectionObject {
     /**
-     * 
+     * The main class for all the user collection operations that can be done with the users or volunteers.
      * @param {String} id ID of the user to be saved in the database
-     * @param {String} firstName First Name of the user to be saved in the database
-     * @param {String} lastName Last Name of the user to be saved in the database
-     * @param {String} encryption Password of the user to be saved in the database
-     * @param {String} email Email of the user to be saved in the database
-     * @param {UserBlogSchema[]} blogs List of Simplified blogs to be saved in the database
+     * @param {String=} firstName First Name of the user to be saved in the database
+     * @param {String=} lastName Last Name of the user to be saved in the database
+     * @param {String=} encryption Password of the user to be saved in the database
+     * @param {String=} email Email of the user to be saved in the database
+     * @param {Array<UserBlogSchema>=} blogs List of Simplified blogs to be saved in the database
      */
     constructor(id, firstName, lastName, encryption, email, blogs) {
         super(id, user)
