@@ -14,7 +14,7 @@ const lowerCase = (() => {
 })()
 
 const createLowerCaseObject = () => {
-    var obj = {}
+    var obj = {} 
     for(var a of lowerCase) {
         obj[a] = []
     }
