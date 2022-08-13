@@ -1,5 +1,5 @@
 FROM node:16.16.0-buster-slim
-RUN apt-get install -y default-jre
+RUN apt-get -y install default-jre
 WORKDIR /usr/src/app
 
 COPY package*.json ./
