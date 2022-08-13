@@ -1,5 +1,5 @@
-FROM openjdk:latest
-RUN apk add --update nodejs nodejs-npm
+FROM node:16.16.0-buster-slim
+RUN /bin/maven -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
 WORKDIR /usr/src/app
 
 COPY package*.json ./
