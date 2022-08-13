@@ -1,5 +1,5 @@
-FROM node:16.16.0
-RUN apt-get -y install default-jre
+FROM ubuntu:22.04
+RUN RUN apt-get update && apt-get install -y defalt-jre && apt-get install -y node && apt-get install -y npm
 WORKDIR /usr/src/app
 
 COPY package*.json ./
