@@ -1,6 +1,5 @@
 # Technophiles API
 
---------------------------------------------------------------------------------
 
 "Website Name" is a portal created by Tricolored Technophiles for:
 - Creating awareness blogs about Disaster Management and organizing mock drills
