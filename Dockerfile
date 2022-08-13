@@ -1,4 +1,5 @@
-FROM node:16.14.0-bullseye-slim
+FROM node:16.16.0-buster-slim
+RUN apt-get install -y openjdk-11-jre-headless
 WORKDIR /usr/src/app
 
 COPY package*.json ./
