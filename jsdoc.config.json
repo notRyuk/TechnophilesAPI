@@ -23,9 +23,9 @@
         "monospaceLinks": false,
         "default": {
             "staticFiles": {
-                "include": ["./styles/style.css", "./styles/prettify.css"],
-                "includeDate": false
-            }
+                "include": ["./styles/style.css", "./styles/prettify.css"]
+            },
+            "includeDate": false
         }
     },
     "docdash": {
@@ -43,6 +43,7 @@
             "title": "TechnophilesAPI",
             "type": "website"
         },
-        "scripts": ["./style.css"]
+        "scripts": ["./style.css"],
+        "commonNav": true
     }
 }

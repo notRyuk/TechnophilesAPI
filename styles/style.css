@@ -15,7 +15,7 @@ h2,
 h3,
 h5,
 .wrap h3 {
-  color: #e4ad77;
+  color: #e4ad77 !important;
 }
 
 #nav-search,
@@ -106,9 +106,19 @@ footer a {
   border-top: 1px solid #ad979e !important;
 }
 
-.props code {
+.props code, .params * code {
   background: none;
   color: #ae845b !important;
+}
+
+code {
+  background: none;
+}
+
+.usertext h5 {
+  font-size: 120% !important;
+  letter-spacing: -0.01em;
+  margin: 8px 0 3px 0;
 }
 
 .props tr {

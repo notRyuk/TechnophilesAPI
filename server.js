@@ -1,4 +1,7 @@
 import express from "express";
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import compression from "compression";
 
 import { PORT } from "./config.js";
 import { UserObject, CollectionObject, BlogObject } from "./db.js";
@@ -7,7 +10,10 @@ import { user, blog, ngo } from "./mongoose.js";
 const app = express()
 
 app.use(express.json())
+app.use(compression())
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 /**
  *  TODO: Updated the res.send function with a param of Object which contains key status of status mentioned above and a key doc with the given doc
  *  The above has to be only done only when the send contains a 200 status else status is already present.
@@ -104,6 +110,17 @@ app.get(/^\/(user|blog|ngo)\/(findByID|findAll)$/, async (req, res) => {
     return
 })
 
+/**
+ * This method creates a new user object in the database.
+ * @name CreateUser
+ * @memberof UserRoutes
+ * @route {POST} /user/create
+ * @bodyparam {String} userName The username of the user 
+ * @bodyparam {String} firstName The first name of the user 
+ * @bodyparam {String} lastName The last name of that user
+ * @bodyparam {String} password The encrypted password of the user
+ * @bodyparam {String} email The email of the user
+ */
 app.post("/user/create", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
@@ -132,6 +149,15 @@ app.post("/user/create", async (req, res) => {
     res.send(newUser)
 })
 
+/**
+ * This method updates the username of the mentioned user.
+ * @name UpdateUserName
+ * @memberof UserRoutes
+ * @route {POST} /user/updateUserName
+ * @bodyparam {String} userName The username of the user
+ * @bodyparam {String} token The token which is returned
+ * @bodyparam {String} newUserName The new username of the user
+ */
 app.post("/user/updateUserName", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
@@ -192,6 +218,15 @@ app.post("/user/updateUserName", async (req, res) => {
     return
 })
 
+/**
+ * This method updates the password of the mentioned user.
+ * @name UpdatePassword
+ * @memberof UserRoutes
+ * @route {POST} /user/updatePassword
+ * @bodyparam {String} userName The username of the user
+ * @bodyparam {String} token The tokenized password of the user
+ * @bodyparam {String} newPassword The new tokenized of the user
+ */
 app.post("/user/updatePassword", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
@@ -253,6 +288,16 @@ app.post("/user/updatePassword", async (req, res) => {
     return
 })
 
+/**
+ * The method to update the email id of the user
+ * @name UpdateEmail
+ * @memberof UserRoutes
+ * @route {POST} /user/updateEmail
+ * @bodyparam {String} userName The username of the user
+ * @bodyparam {String} The tokenized password of the user
+ * @bodyparam {String} email The current email of the user
+ * @bodyparam {String} newEmail The new email of the user
+ */
 app.post("/user/updateEmail", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
@@ -313,13 +358,20 @@ app.post("/user/updateEmail", async (req, res) => {
     return
 })
 
+/**
+ * The method to update the name of the user
+ * @name UpdateName
+ * @memberof UserRoutes
+ * @route {POST} /user/updateName
+ * @bodyparam {String} userName The username of the user
+ * @bodyparam {String} token The tokenized password of the user
+ * @bodyparam {NameOfUser} name The current name of the user
+ * @bodyparam {NameOfUser} newName The new name of the user
+ */
 app.post("/user/updateName", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
     var values = Object.values(body)
-    /**
-     * TODO: In docs we have to specify the name format as an object( {first: "", last: ""} )
-     */
     var required = ["userName", "token", "name", "newName"]
     for(var i of required) {
         if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
@@ -373,6 +425,14 @@ app.post("/user/updateName", async (req, res) => {
     return
 })
 
+/**
+ * The method to delete the user from the database
+ * @name DeleteUser
+ * @memberof UserRoutes
+ * @route {DELETE} /user/delete
+ * @bodyparam {String} userName The username of the user
+ * @bodyparam {String} token The tokenized password of the user
+ */
 app.delete("/user/delete", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
@@ -424,6 +484,13 @@ app.delete("/user/delete", async (req, res) => {
     return
 })
 
+/**
+ * The method to fetch users by name
+ * @name FindByName
+ * @memberof UserRoutes
+ * @route {GET} /user/findByName
+ * @bodyparam {NameOfUser} name The name of the user to search
+ */
 app.get("/user/findByName", async (req, res) => {
     const body = req.body
     var name = {
@@ -476,6 +543,13 @@ app.get("/user/findByName", async (req, res) => {
     })
 })
 
+/**
+ * The method to identify the users by email
+ * @name FindByEmail
+ * @memberof UserRoutes
+ * @route {GET} /user/findByEmail
+ * @bodyparam {String} email The email id to fetch
+ */
 app.get("/user/findByEmail", async (req, res) => {
     const body = req.body
     if(!body.email || body.email.length === 0) {
@@ -515,6 +589,16 @@ app.get("/user/findByEmail", async (req, res) => {
     return
 })
 
+/**
+ * The method to create the blog written by the user
+ * @name CreateBlog
+ * @memberof BlogRoutes
+ * @route {POST} /blog/create
+ * @bodyparam {String} userName The username of the user that wrote the blog
+ * @bodyparam {String} name The name of the blog
+ * @bodyparam {String} [description=""] The description of the blog
+ * @bodyparam {String} content The markdown'd content of the blog
+ */
 app.post("/blog/create", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
@@ -561,6 +645,17 @@ app.post("/blog/create", async (req, res) => {
     res.send(newBlog.doc || newBlog)
 })
 
+/**
+ * The method to update the blog.
+ * <br>
+ * <b>Note:</b> Any one of the name or description or content have to be present to update the blog.
+ * @name UpdateBlog
+ * @memberof BlogRoutes
+ * @route {POST} /blog/update
+ * @bodyparam {String} [newName=""] The new name of the blog
+ * @bodyparam {String} [newDescription=""] The new description of the blog
+ * @bodyparam {String} [newContent=""] The new content of the blog
+ */
 app.post("/blog/update", async (req, res) => {
     const body = req.body
     if(!body.id || body.id.trim().length === 0) {
@@ -591,6 +686,13 @@ app.post("/blog/update", async (req, res) => {
     res.send(newBlog.doc || newBlog)
 })
 
+/**
+ * The method to delete the blog written by the user
+ * @name DeleteBlog
+ * @memberof BlogRoutes
+ * @route {DELETE} /blog/delete
+ * @bodyparam {String} id The blog to delete
+ */
 app.delete("/blog/delete", async (req, res) => {
     const body = req.body
     if(!body.id || body.id.trim().length === 0) {
@@ -616,6 +718,13 @@ app.delete("/blog/delete", async (req, res) => {
     res.send(newBlog.doc || newBlog)
 })
 
+/**
+ * The method to find the blog by name
+ * @name FindByName
+ * @memberof BlogRoutes
+ * @route {GET} /blog/findByName
+ * @bodyparam {String} key The key to search in the blogs
+ */
 app.get("/blog/findByName", async (req, res) => {
     const body = req.body
     if(!body.key || body.key.trim().length === 0) {
@@ -627,7 +736,7 @@ app.get("/blog/findByName", async (req, res) => {
         })
         return
     }
-    var newBlog = await new BlogObject(body.id).delete()
+    var newBlog = await new BlogObject(body.id).findBySimilarity(body.key.trim())
     if(!newBlog) {
         res.status(404)
         res.send({
@@ -644,6 +753,12 @@ app.get("/blog/findByName", async (req, res) => {
 // app.post("/ngo/create", async (req, res) => {
 
 // })
+
+app.use(express.static("docs"))
+
+app.get("/", (_, res) => {
+    res.sendFile("./docs/index.html")
+})
 
 app.get("*", (_, res) => {
     res.status(404)

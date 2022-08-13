@@ -76,7 +76,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server.js.html">server.js</a>, <a href="server.js.html#line21">line 21</a>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -138,6 +138,204 @@
 
         
             
+<h4 class="name" id="CreateBlog"><span class="type-signature">(route) </span>CreateBlog<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line592">line 592</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/blog/create</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the blog written by the user</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th>Default</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">userName</td>
+            <td class="type">String</td>
+            <td class="attributes"></td>
+            <td class="default"></td>
+            <td class="description last">The username of the user that wrote the blog</td>
+          </tr><tr>
+            <td class="name">name</td>
+            <td class="type">String</td>
+            <td class="attributes"></td>
+            <td class="default"></td>
+            <td class="description last">The name of the blog</td>
+          </tr><tr>
+            <td class="name">description</td>
+            <td class="type">String</td>
+            <td class="attributes">optional</td>
+            <td class="default">""</td>
+            <td class="description last">The description of the blog</td>
+          </tr><tr>
+            <td class="name">content</td>
+            <td class="type">String</td>
+            <td class="attributes"></td>
+            <td class="default"></td>
+            <td class="description last">The markdown'd content of the blog</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="DeleteBlog"><span class="type-signature">(route) </span>DeleteBlog<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line689">line 689</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">DELETE</td>
+                            <td class="name last">/blog/delete</td>
+                            </tr>
+                            </table>
+                            <p>The method to delete the blog written by the user</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The blog to delete</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
 <h4 class="name" id="findAll"><span class="type-signature">(route) </span>findAll<span class="type-signature"></span></h4>
 
 
@@ -149,7 +347,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server.js.html">server.js</a>, <a href="server.js.html#line55">line 55</a>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line61">line 61</a>
     </li></ul></dd>
     
 
@@ -220,7 +418,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="server.js.html">server.js</a>, <a href="server.js.html#line35">line 35</a>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line41">line 41</a>
     </li></ul></dd>
     
 
@@ -298,6 +496,200 @@
 
 
         
+            
+<h4 class="name" id="FindByName"><span class="type-signature">(route) </span>FindByName<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line721">line 721</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/blog/findByName</td>
+                            </tr>
+                            </table>
+                            <p>The method to find the blog by name</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">key</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The key to search in the blogs</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateBlog"><span class="type-signature">(route) </span>UpdateBlog<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line648">line 648</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/blog/update</td>
+                            </tr>
+                            </table>
+                            <p>The method to update the blog.
+<br>
+<b>Note:</b> Any one of the name or description or content have to be present to update the blog.</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Attributes</th>
+                <th>Default</th>
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">newName</td>
+            <td class="type">String</td>
+            <td class="attributes">optional</td>
+            <td class="default">""</td>
+            <td class="description last">The new name of the blog</td>
+          </tr><tr>
+            <td class="name">newDescription</td>
+            <td class="type">String</td>
+            <td class="attributes">optional</td>
+            <td class="default">""</td>
+            <td class="description last">The new description of the blog</td>
+          </tr><tr>
+            <td class="name">newContent</td>
+            <td class="type">String</td>
+            <td class="attributes">optional</td>
+            <td class="default">""</td>
+            <td class="description last">The new content of the blog</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
     
 
     
@@ -317,10 +709,6 @@
 </div>
 
 <br class="clear">
-
-<footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a> on Fri Aug 12 2022 19:37:27 GMT+0530 (India Standard Time) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
-</footer>
 
 <script>prettyPrint();</script>
 <script src="scripts/polyfill.js"></script>
