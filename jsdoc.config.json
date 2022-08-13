@@ -1,0 +1,49 @@
+{
+    "tags": {
+        "allowUnknownTags": true
+    },
+    "source": {
+        "includePattern": "\\.js$",
+        "excludePattern": "(node_modules/|docs|test*)",
+        "exclude": ["node_modules/"]
+    },
+    "plugins": [
+        "plugins/markdown",
+        "node_modules/jsdoc-route-plugin"
+    ],
+    "opts": {
+        "template": "node_modules/docdash",
+        "encoding": "utf8",
+        "destination": "docs/",
+        "recurse": true,
+        "verbose": true
+    },
+    "templates": {
+        "cleverLinks": true,
+        "monospaceLinks": false,
+        "default": {
+            "staticFiles": {
+                "include": ["./styles/style.css", "./styles/prettify.css"]
+            },
+            "includeDate": false
+        }
+    },
+    "docdash": {
+        "search": true,
+        "collapse": true,
+        "static": false,
+        "typedefs": true,
+        "wrap": true,
+        "meta": {
+            "title": "TechnophilesAPI",
+            "description": "The API made by TriColored Technophiles SIH team for easy handling of frond-end apps.",
+            "keyword": "SIH, API, Disaster Management, Node, express"
+        },
+        "openGraph": {
+            "title": "TechnophilesAPI",
+            "type": "website"
+        },
+        "scripts": ["./style.css"],
+        "commonNav": true
+    }
+}

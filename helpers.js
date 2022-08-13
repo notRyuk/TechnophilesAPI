@@ -1,6 +1,9 @@
 import { user } from "./mongoose.js";
 import { promisify } from 'util';
 import { exec as exec1} from 'child_process';
+
+import Tokenizer from "./tokenizer.js";
+
 const exec = promisify(exec1)
 
 
@@ -25,9 +28,11 @@ const createLowerCaseObject = () => {
  * Returns the queries with their start and end index if found in the text
  * @param {String} query A string consisting of words to be entered as the query
  * @param {String} text The text within which the queries are to be searched
- * @returns 
+ * @returns String
  */
 const searchBlog = async(query, text) => {
+    query = query.replace(/[0-9]+/, "")
+    text = text.replace(/[0-9]+/, "")
     var out = ""
     const child = await exec(`java search "${query}" "${text}"`)
     if(child.stdout) {
@@ -160,11 +165,13 @@ const stateList = [
 ]
 
 const __globals = new Globals()
+const tokenizer = new Tokenizer()
 
 export {
     lowerCase,
     createLowerCaseObject,
     searchBlog,
     __globals,
-    stateList
+    stateList,
+    tokenizer
 }

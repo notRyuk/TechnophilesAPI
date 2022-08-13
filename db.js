@@ -22,6 +22,12 @@ catch {
 
 
 class CollectionObject {
+
+    /**
+     * The parent class of all the classes in mentioned in the documentation
+     * @param {String} id The ID of document in the collection that is specified
+     * @param {mongoose.Model} col The mongoose model of the Collection that is to be specified
+     */
     constructor(id, col) {
         this.id = id
         this.col = col
@@ -66,7 +72,7 @@ class CollectionObject {
     }
 
     /**
-     * 
+     * Checks if mentioned email is valid according to the international email format.
      * @param {String} email The email ID to check the validation 
      * @returns Boolean
      */
@@ -111,16 +117,29 @@ class CollectionObject {
     }
 }
 
-
+/**
+ * The definition of the miniature of Blog object that is stored in the user collection.
+ * @typedef {Object} UserBlogSchema The miniature version of the blog stored in the user collection for faster access
+ * @property {String} _id The id of the blog that is to be stored.
+ * @property {String} name The name of the blog that is to be stored.
+ * @property {String=} description The description of the blog that is to be stored.
+ */
+/**
+ * The default error object that is used over all the code.
+ * @typedef {Object} Error The default error object
+ * @property {Number} status The HTTP status code of the error
+ * @property {String!} error The error that is generated
+ * @property {String!} comment A possible fix that can be done for the error occurred
+ */
 class UserObject extends CollectionObject {
     /**
-     * 
+     * The main class for all the user collection operations that can be done with the users or volunteers.
      * @param {String} id ID of the user to be saved in the database
-     * @param {String} firstName First Name of the user to be saved in the database
-     * @param {String} lastName Last Name of the user to be saved in the database
-     * @param {String} encryption Password of the user to be saved in the database
-     * @param {String} email Email of the user to be saved in the database
-     * @param {UserBlogSchema[]} blogs List of Simplified blogs to be saved in the database
+     * @param {String=} firstName First Name of the user to be saved in the database
+     * @param {String=} lastName Last Name of the user to be saved in the database
+     * @param {String=} encryption Password of the user to be saved in the database
+     * @param {String=} email Email of the user to be saved in the database
+     * @param {Array<UserBlogSchema>=} blogs List of Simplified blogs to be saved in the database
      */
     constructor(id, firstName, lastName, encryption, email, blogs) {
         super(id, user)
@@ -134,7 +153,7 @@ class UserObject extends CollectionObject {
         this.blogs = blogs
 
         this.doc = {
-            id: this.id,
+            _id: this.id,
             name: {
                 first: this.firstName,
                 last: this.lastName,
@@ -311,7 +330,7 @@ class UserObject extends CollectionObject {
         }
         await this.delete()
         __user = await new UserObject(
-            __user._id,
+            newUserName,
             __user.name.first,
             __user.name.last,
             __user.encryption,
@@ -329,19 +348,8 @@ class UserObject extends CollectionObject {
                 comment: "The requested id is not in the database"
             }
         }
-        return await this.col.findByIdAndDelete(this.id)
-        .then(data => {
-            if(data) {
-                this.__removeVersionInfo(__user)
-                return __user
-            }
-        })
-        .catch(_ => {
-            return {
-                status: 404,
-                comment: "It seems that there is a problem with the database! Try again later!"
-            }
-        })
+        var data = await this.col.findByIdAndDelete(this.id)
+        return data
     }
 
     extractBlogIds(user) {
@@ -436,15 +444,19 @@ class UserObject extends CollectionObject {
     }
 
     async findByFirstName(firstName) {
-        return (await this.col.find({})).filter(e => e.name.first === firstName)
+        return (await this.col.find({})).filter(e => e.name.first.toLowerCase().trim() === firstName.toLowerCase().trim())
     }
 
     async findByLastName(lastName) {
-        return (await this.col.find({})).filter(e => e.name.last === lastName)
+        return (await this.col.find({})).filter(e => e.name.last.toLowerCase().trim() === lastName.toLowerCase().trim())
     }
 
     async findByFullName(name) {
-        return (await this.col.find({})).filter(e => e.name.first + " " + e.name.last === name)
+        return (await this.col.find({})).filter(e => (e.name.first.trim() + " " + e.name.last.trim()).toLowerCase() === name.toLowerCase().trim())
+    }
+
+    async findByEmail(email) {
+        return (await this.col.find({})).filter(e => e.email === email)
     }
 }
 
@@ -465,7 +477,7 @@ class BlogObject extends CollectionObject {
         this.content = content
 
         this.doc = {
-            id: id,
+            _id: id,
             name: name,
             description: description,
             content: content
@@ -632,19 +644,7 @@ class BlogObject extends CollectionObject {
             __user.blogs
         )
         __blog = await this.col.findByIdAndDelete(__blog._id)
-        .then(data => {
-            if(data) {
-                this.__removeVersionInfo(__blog)
-                return __blog
-            }
-        })
-        .catch(_ => {
-            return {
-                status: 404,
-                comment: "It seems that there is an error contacting the database! Try again after sometime."
-            }
-        })
-        if(!__blog || __blog.status === 404) {
+        if(!__blog) {
             return {
                 status: 404,
                 comment: "It seems that there is an error contacting the database! Try again after sometime."
@@ -659,7 +659,7 @@ class BlogObject extends CollectionObject {
                 comment: "It seems that there is an error contacting the database! Try again after sometime."
             }
         }
-        return this.doc
+        return __blog
     }
 
     /**
@@ -673,7 +673,7 @@ class BlogObject extends CollectionObject {
         if(!__blogs || __blogs.length === 0) {
             return {
                 status: 404,
-                comment: "No blogs found in the database."
+                comment: "The database refused to connect or there are no blogs on the database."
             }
         }
         var res = []
@@ -691,7 +691,7 @@ class BlogObject extends CollectionObject {
 
 class NGOObject extends CollectionObject {
     /**
-     * 
+     * The main class for all the NGO routes
      * @param {String} id The ID of the NGO in the database or that is to be created
      * @param {String} name The name of the NGO in the database or that is to be created
      * @param {String} startTime The daily start timings of the NGO in the format of HH:mm
@@ -741,7 +741,7 @@ class NGOObject extends CollectionObject {
         this.pinCode = pinCode
 
         this.doc = {
-            id: this.id,
+            _id: this.id,
             name: this.name,
             timings: {
                 start: this.startTime,

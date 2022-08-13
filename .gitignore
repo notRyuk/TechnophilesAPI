@@ -1,4 +1,5 @@
 node_modules
+.vscode
 
 *.env
 
@@ -8,3 +9,5 @@ aho-corasick.js
 AhoCorasick.*
 returnAddress.js
 functions.js
+
+*.stackdump
