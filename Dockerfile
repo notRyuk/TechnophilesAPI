@@ -1,6 +1,5 @@
-FROM openjdk:latest
 FROM node:16.16.0
-
+RUN apt-get -y install default-jre
 WORKDIR /usr/src/app
 
 COPY package*.json ./
