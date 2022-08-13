@@ -1,5 +1,6 @@
-FROM node:16.16.0-buster-slim
-RUN /bin/maven -DoutputFile=target/mvn-dependency-list.log -B -DskipTests clean dependency:list install
+FROM curlimages/curl:latest
+FROM openjdk:latest
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
