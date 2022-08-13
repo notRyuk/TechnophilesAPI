@@ -1,8 +1,5 @@
 FROM openjdk:latest
-RUN apt install -y curl \
-  && curl -sL https://deb.nodesource.com/setup_16.x | bash - \
-  && apt install -y nodejs \
-  && curl -L https://www.npmjs.com/install.sh | sh
+RUN apk add --update nodejs nodejs-npm
 WORKDIR /usr/src/app
 
 COPY package*.json ./
