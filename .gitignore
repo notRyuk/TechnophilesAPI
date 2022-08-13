@@ -7,5 +7,7 @@ test.*
 tests.*
 aho-corasick.js
 AhoCorasick.*
+returnAddress.js
+functions.js
 
 *.stackdump

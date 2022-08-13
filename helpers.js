@@ -31,6 +31,8 @@ const createLowerCaseObject = () => {
  * @returns String
  */
 const searchBlog = async(query, text) => {
+    query = query.replace(/[0-9]+/, "")
+    text = text.replace(/[0-9]+/, "")
     var out = ""
     const child = await exec(`java search "${query}" "${text}"`)
     if(child.stdout) {
