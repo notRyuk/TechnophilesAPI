@@ -73,4 +73,4 @@ class Tokenizer {
     }
 }
 
-export default Tokenizer
+export default Tokenizer;
