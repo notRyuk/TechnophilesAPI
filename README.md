@@ -15,6 +15,13 @@ The Technophiles API serves as the backend to the the "Project Name" Android app
 - Uses the latest industry-standard technology stack to provide the smoothest experience to the user.
 - Bridges the connectivity gap between the rescuers and the rescuees through affilation with NGOs.
 
+## Basic API Usage
+
+### Node.js
+```js
+await axios.get("")
+```
+
 ## About us
 
 Tricolored Technophiles is a 6 membered team from Indian Institute of Information Technology, Sri City, Chittoor.
