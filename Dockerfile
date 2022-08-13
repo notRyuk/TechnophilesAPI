@@ -1,4 +1,4 @@
-FROM curlimages/curl:latest
+FROM node:16.16.0-buster-slim
 FROM openjdk:latest
 
 WORKDIR /usr/src/app
