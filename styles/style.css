@@ -20,8 +20,12 @@ h5,
   font-family: 'Montserrat', sans-serif !important;
 }
 
-article * {
+article p, article li {
   font-family: 'Montserrat', sans-serif !important;
+}
+
+article code {
+  font-family: Consolas, Monaco, 'Andale Mono', monospace !important;
 }
 
 article a {
