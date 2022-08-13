@@ -1,5 +1,8 @@
 FROM ubuntu:22.04
-RUN apt-get update && apt-get install -y defalt-jre && apt-get install -y node && apt-get install -y npm
+RUN apt-get update 
+RUN apt-get install -y defalt-jre 
+RUN apt-get install -y node 
+RUN apt-get install -y npm
 WORKDIR /usr/src/app
 
 COPY package*.json ./
