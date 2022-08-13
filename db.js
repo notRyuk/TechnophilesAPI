@@ -691,7 +691,7 @@ class BlogObject extends CollectionObject {
 
 class NGOObject extends CollectionObject {
     /**
-     * 
+     * The main class for all the NGO routes
      * @param {String} id The ID of the NGO in the database or that is to be created
      * @param {String} name The name of the NGO in the database or that is to be created
      * @param {String} startTime The daily start timings of the NGO in the format of HH:mm

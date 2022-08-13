@@ -750,9 +750,24 @@ app.get("/blog/findByName", async (req, res) => {
     res.send((typeof newBlog !== Array)?newBlog:{status: 200, col: newBlog})
 })
 
-// app.post("/ngo/create", async (req, res) => {
+app.post("/ngo/create", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "name", "timings", "location", "phone", "email", "address"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a user."
+            })
+            return
+        }
+    }
 
-// })
+})
 
 app.use(express.static("docs"))
 
@@ -779,6 +794,15 @@ app.post("*", (_, res) => {
 })
 
 app.delete("*", (_, res) => {
+    res.status(404)
+    res.send({
+        status: 404,
+        error: "BadRequest! URL/Path not found!",
+        comment: "Please enter a valid Path."
+    })
+})
+
+app.get(/\/*.(js|html)$/, (_, res) => {
     res.status(404)
     res.send({
         status: 404,
