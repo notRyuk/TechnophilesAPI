@@ -11,11 +11,26 @@ body,
 }
 
 .page-title,
+h1,
 h2,
 h3,
 h5,
-.wrap h3 {
+.wrap h3{
   color: #e4ad77 !important;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+article p, article li {
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+article code {
+  font-family: Consolas, Monaco, 'Andale Mono', monospace !important;
+}
+
+article a {
+  color: #ad979e !important;
+  border: none;
 }
 
 #nav-search,
