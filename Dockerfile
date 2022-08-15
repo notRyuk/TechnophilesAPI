@@ -8,4 +8,6 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
+RUN cp ./layout.tmpl node_modules/docdash/tmpl/
+RUN npm run generate-docs
 CMD ["node", "server.js"]
