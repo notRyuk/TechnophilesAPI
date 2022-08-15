@@ -1,6 +1,6 @@
 import express from "express";
 import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+import { join, dirname } from "path";
 import compression from "compression";
 
 import { PORT } from "./config.js";
@@ -1154,14 +1154,17 @@ app.post("/ngo/updateLongitude", async (req, res) => {
 })
 
 
-app.use(express.static("./logo"))
+app.use(express.static(join(__dirname, "logo")))
 app.get(/\/logo(.png)?$/, async (_, res) => {
-    res.sendFile("./logo/logo.png")
+    res.sendFile(join(__dirname, "logo", "logo.png"))
+})
+app.get(/\/circular(.png)?$/, async (_, res) => {
+    res.sendFile(join(__dirname, "logo", "circular.png"))
 })
 
-app.use(express.static("docs"))
+app.use(express.static(join(__dirname, "docs")))
 app.get("/", (_, res) => {
-    res.sendFile("./docs/index.html")
+    res.sendFile(join(__dirname, "docs", "index.html"))
 })
 
 app.get("*", (_, res) => {
