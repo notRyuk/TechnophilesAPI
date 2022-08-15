@@ -4,7 +4,7 @@ import { dirname } from 'path';
 import compression from "compression";
 
 import { PORT } from "./config.js";
-import { UserObject, CollectionObject, BlogObject } from "./db.js";
+import { UserObject, CollectionObject, BlogObject, NGOObject } from "./db.js";
 import { user, blog, ngo } from "./mongoose.js";
 
 const app = express()
@@ -127,12 +127,12 @@ app.post("/user/create", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "firstName", "lastName", "password", "email"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
             res.status(404)
             res.send({
                 status: 404,
                 error: `The ${i} parameter is missing or empty in the request body.`,
-                comment: "The required parameters are needed for making a user."
+                comment: "The required parameters are needed for making a request."
             })
             return
         }
@@ -164,12 +164,12 @@ app.post("/user/updateUserName", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token", "newUserName"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
             res.status(404)
             res.send({
                 status: 404,
                 error: `The ${i} parameter is missing or empty in the request body.`,
-                comment: "The required parameters are needed for making a user."
+                comment: "The required parameters are needed for making a request."
             })
             return
         }
@@ -233,12 +233,12 @@ app.post("/user/updatePassword", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token", "newPassword"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
             res.status(404)
             res.send({
                 status: 404,
                 error: `The ${i} parameter is missing or empty in the request body.`,
-                comment: "The required parameters are needed for making a user."
+                comment: "The required parameters are needed for making a request."
             })
             return
         }
@@ -304,12 +304,12 @@ app.post("/user/updateEmail", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token", "email", "newEmail"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
             res.status(404)
             res.send({
                 status: 404,
                 error: `The ${i} parameter is missing or empty in the request body.`,
-                comment: "The required parameters are needed for making a user."
+                comment: "The required parameters are needed for making a request."
             })
             return
         }
@@ -374,12 +374,12 @@ app.post("/user/updateName", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token", "name", "newName"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
             res.status(404)
             res.send({
                 status: 404,
                 error: `The ${i} parameter is missing or empty in the request body.`,
-                comment: "The required parameters are needed for making a user."
+                comment: "The required parameters are needed for making a request."
             })
             return
         }
@@ -439,12 +439,12 @@ app.delete("/user/delete", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "token"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
             res.status(404)
             res.send({
                 status: 404,
                 error: `The ${i} parameter is missing or empty in the request body.`,
-                comment: "The required parameters are needed for making a user."
+                comment: "The required parameters are needed for making a request."
             })
             return
         }
@@ -605,7 +605,7 @@ app.post("/blog/create", async (req, res) => {
     var values = Object.values(body)
     var required = ["userName", "name", "description", "content"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
             res.status(404)
             res.send({
                 status: 404,
@@ -622,7 +622,7 @@ app.post("/blog/create", async (req, res) => {
         res.send({
             status: 404,
             error: "The mentioned user does not exist in the database",
-            comment: "Try providing a user that actually exists"
+            comment: "Try providing a user that actually exists."
         })
         return
     }
@@ -750,24 +750,409 @@ app.get("/blog/findByName", async (req, res) => {
     res.send((typeof newBlog !== Array)?newBlog:{status: 200, col: newBlog})
 })
 
+/**
+ * The method to crete the NGO object in the database
+ * @name CreateNGO
+ * @memberof NGORoutes
+ * @route {POST} /ngo/create
+ * @bodyparam {String} id The id of the NGO
+ * @bodyparam {String} name The name of the NGO
+ * @bodyparam {TimingsOfNGO} timings The working timings of the NGO
+ * @bodyparam {LocationOfNGO} location The current location of the NGO based on address
+ * @bodyparam {String} phone The contact number of the NGO 
+ * @bodyparam {String} email The contact email of the NGO
+ * @bodyparam {AddressOfNGO} address The address of the NGO
+ */
 app.post("/ngo/create", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
     var values = Object.values(body)
     var required = ["id", "name", "timings", "location", "phone", "email", "address"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].length === 0) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
             res.status(404)
             res.send({
                 status: 404,
                 error: `The ${i} parameter is missing or empty in the request body.`,
-                comment: "The required parameters are needed for making a user."
+                comment: "The required parameters are needed for making a request."
             })
             return
         }
     }
-
+    var newNGO = await new NGOObject(
+        body.id,
+        body.name,
+        body.timings.start,
+        body.timings.close,
+        body.timings.days,
+        body.location.latitude,
+        body.location.longitude,
+        body.phone,
+        body.email,
+        body.address.line_1,
+        body.address.line_2,
+        body.address.city_village,
+        body.address.state,
+        body.address.pin_code
+    ).create()
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
 })
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateName
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateName
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {String} newName The new name of the NGO
+ */
+app.post("/ngo/updateName", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newName"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var newNGO = await new NGOObject(body.id).updateName(body.newName)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateStartTime
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateStartTime
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {String} newStartTime The new start time of the NGO
+ */
+app.post("/ngo/updateStartTime", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newStartTime"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var newNGO = await new NGOObject(body.id).updateStartTime(body.newStartTime)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateCloseTime
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateCloseTime
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {String} newCloseTime The new close time of the NGO
+ */
+app.post("/ngo/updateCloseTime", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newCloseTime"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var newNGO = await new NGOObject(body.id).updateCloseTime(body.newCloseTime)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateDays
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateDays
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {String} newDays The new working days of the NGO
+ */
+app.post("/ngo/updateDays", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newDays"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var newNGO = await new NGOObject(body.id).updateDays(body.newDays)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateTimings
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateTimings
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {String} newDays The new working days of the NGO
+ * @bodyparam {String} newStartTime The new start time of the NGO
+ * @bodyparam {String} newCloseTime The new close time of the NGO
+ */
+app.post("/ngo/updateTimings", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newDays", "newStartTime", "newCloseTime"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var newNGO = await new NGOObject(body.id).updateTimings(body.newStartTime, body.newCloseTime, body.newDays)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateLatitude
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateLatitude
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {Number} newLatitude The new close time of the NGO
+ */
+app.post("/ngo/updateLatitude", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newLatitude"]
+    for(var i of required) {
+        if(!keys.includes(i)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    if(values[keys.indexOf("id")].trim().length === 0) {
+        res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+    }
+    var newNGO = await new NGOObject(body.id).updateLatitude(body.newLatitude)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateLongitude
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateLongitude
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {Number} newLongitude The new close time of the NGO
+ */
+app.post("/ngo/updateLongitude", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newLongitude"]
+    for(var i of required) {
+        if(!keys.includes(i)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    if(values[keys.indexOf("id")].trim().length === 0) {
+        res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+    }
+    var newNGO = await new NGOObject(body.id).updateLongitude(body.newLongitude)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateLocation
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateLocation
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {Number} newLatitude The new close time of the NGO
+ * @bodyparam {Number} newLongitude The new close time of the NGO
+ */
+ app.post("/ngo/updateLocation", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newLatitude", "newLongitude"]
+    for(var i of required) {
+        if(!keys.includes(i)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    if(values[keys.indexOf("id")].trim().length === 0) {
+        res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+    }
+    var newNGO = await new NGOObject(body.id).updateLocation(body.newLocation)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdatePhone
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updatePhone
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {String} newPhone The new close time of the NGO
+ */
+ app.post("/ngo/updatePhone", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newPhone"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var newNGO = await new NGOObject(body.id).updatePhone(body.newPhone)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateEmail
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateEmail
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {String} newEmail The new close time of the NGO
+ */
+ app.post("/ngo/updateEmail", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newEmail"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var newNGO = await new NGOObject(body.id).updateEmail(body.newEmail)
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
+
+/**
+ * The method to update the name of the NGO
+ * @name UpdateAddress
+ * @memberof NGORoutes
+ * @route {POST} /ngo/updateAddress
+ * @bodyparam {Sting} id The id of the NGO
+ * @bodyparam {AddressOfNGO} newAddress The new close time of the NGO
+ */
+ app.post("/ngo/updateAddress", async (req, res) => {
+    const body = req.body
+    if(!body.id || body.id.trim().length === 0) {
+        res.status(404)
+        res.send({
+            status: 404,
+            error: `The ${i} parameter is missing or empty in the request body.`,
+            comment: "The required parameters are needed for making a request."
+        })
+        return
+    }
+    var newNGO = await new NGOObject(body.id).updateAddress(
+        body.newAddress.line_1.trim(),
+        body.newAddress.line_2.trim(),
+        body.newAddress.city_village.trim(),
+        body.newAddress.state.trim(),
+        body.newAddress.pin_code
+    )
+    res.status(newNGO.status || 200)
+    res.send(newNGO.doc || newNGO)
+})
+
 
 app.use(express.static("docs"))
 
@@ -812,4 +1197,4 @@ app.get(/\/*.(js|html)$/, (_, res) => {
 })
 
 console.log("The app is listening on the port: ", PORT)
-app.listen(PORT)
+app.listen(PORT, "192.168.0.131")
