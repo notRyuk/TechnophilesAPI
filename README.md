@@ -1,11 +1,11 @@
-# Technophiles API
+# Technophiles API v1.2
 
 
 "Website Name" is a portal created by Tricolored Technophiles for:
 - Creating awareness blogs about Disaster Management and organizing mock drills
 - Providing status of each registered rehabilitation organizations and active ranger
 
-The Technophiles API serves as the backend to the the "Project Name" Android app and website. The documenation for the API can be found [here](/BlogObject.html)
+The Technophiles API serves as the backend to the the "Project Name" Android app and website. The documenation for the API can be found [here](https://techophilesapi.herokuapp.com/BlogObject.html)
 
 ## More about "Project Name"
 
@@ -19,8 +19,38 @@ The Technophiles API serves as the backend to the the "Project Name" Android app
 
 ### Node.js
 ```js
-await axios.get("")
+import axios from "axios";
+
+await axios.get("https://technophilesapi.herokuapp.com/user/findByID", {
+    data: {
+        id: "user1"
+    }
+})
 ```
+- Output
+```json
+{
+    "status": 200,
+    "col": {
+        "name": {
+            "first": "First Name of User1",
+            "last": "Last name of user1"
+        },
+        "_id": "user1",
+        "encryption": "encryption of user1",
+        "email": "email.user1@domain.com",
+        "blogs": [
+            {
+                "_id": "user1__blog__1",
+                "name": "This is the first edited blog by me",
+                "description": "This is the first edited description"
+            }
+        ],
+        "__v": 15
+    }
+}
+```
+- For other methods just replace `.get` with `.post` or `.delete`
 
 ## About us
 
