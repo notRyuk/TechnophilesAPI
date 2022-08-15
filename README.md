@@ -3,13 +3,13 @@
 </h1>
 
 <p align="center">
-  <style>
-    img {
-        position: relative;
-        width: 70%;
-    }
-  </style>
-  <img alt="Logo" src="./logo/logo.png">
+    <img alt="Logo" src="./logo/logo.png">
+    <style>
+        img {
+            position: relative;
+            width: 70%;
+        }
+    </style>
 </p>
 
 KeyBlue is a portal created by Tricolored Technophiles for:
