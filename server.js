@@ -1204,4 +1204,4 @@ app.get(/\/*.(js|html)$/, (_, res) => {
 })
 
 console.log("The app is listening on the port: ", PORT)
-app.listen(PORT, "192.168.0.131")
+app.listen(PORT)
