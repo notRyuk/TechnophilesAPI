@@ -764,27 +764,23 @@ class NGOObject extends CollectionObject {
         }
     }
 
-    __verifyTime() {
+    __verifyTime(time) {
         var regex = /^[0-9]{2}\:[0-9]{2}$/
-        if(!regex.test(this.startTime) || !regex.test(this.closeTime)) {
+        if(!regex.test(time)) {
             return false
         }
-        var __start = this.startTime.split(":").map(e => Number(e))
-        var __close = this.closeTime.split(":").map(e => Number(e))
-        if(!__start.length === 2 || !__close.length === 2) {
+        var __time = time.split(":").map(e => Number(e))
+        if(!__time) {
             return false
         }
-        if(
-            (__start[0] >= 0 && __start[0] <= 23) && 
-            (__close[0] >= 0 && __close[0] <= 23)
-        ) {
+        if((__time[0] >= 0 && __time[0] <= 23)) {
             return true
         } 
         return false
     } 
 
-    __verifyDay() {
-        var __days = this.days.split("-")
+    __verifyDay(day) {
+        var __days = day.split("-")
         if(__days.length !== 2) {
             return false
         }
@@ -795,20 +791,20 @@ class NGOObject extends CollectionObject {
         return false
     }
 
-    __verifyLatitude() {
-        return this.latitude >= -90 && this.latitude <= 90
+    __verifyLatitude(latitude) {
+        return latitude >= -90 && latitude <= 90
     }
 
-    __verifyLongitude() {
-        return this.longitude >= -180 && this.longitude <= 180
+    __verifyLongitude(longitude) {
+        return longitude >= -180 && longitude <= 180
     }
 
-    __verifyPinCode() {
-        return Number.isInteger(this.pinCode) && (this.pinCode >= 110000 && this.pinCode <= 990000)
+    __verifyPinCode(pinCode) {
+        return Number.isInteger(pinCode) && (pinCode >= 110000 && pinCode <= 990000)
     }
 
-    __verifyState() {
-        return stateList.map(e => e.toLowerCase()).includes(this.state.toLowerCase())
+    __verifyState(state) {
+        return stateList.map(e => e.toLowerCase()).includes(state.toLowerCase())
     }
 
     /**
@@ -824,13 +820,13 @@ class NGOObject extends CollectionObject {
         return {
             city_village: __data.Block,
             state: __data.State,
-            pin_code: this.pinCode
+            pin_code: pinCode
         }
     }
 
-    async __verifyAddress() {
-        var __address = await this.getPinCodeInfo(this.pinCode)
-        return __address && this.__verifyState() && __address.state.toLowerCase() === this.state.toLowerCase()
+    async __verifyAddress(address) {
+        var __address = await this.getPinCodeInfo(address.pin_code)
+        return __address && this.__verifyState() && __address.state.toLowerCase() === address.state.toLowerCase()
     }
 
     __return(__ngo) {
@@ -859,7 +855,7 @@ class NGOObject extends CollectionObject {
     async verifyNGO() {
         var __ngo = await this.verify()
         if(__ngo) {
-            return this.__return(__ngo)
+            return __ngo
         }
         if(!this.isEmailValid(this.email)) {
             return {
@@ -915,28 +911,28 @@ class NGOObject extends CollectionObject {
                 comment: "The correct format is Mon-Sat"
             }
         }
-        if(!this.__verifyLatitude()) {
+        if(!this.__verifyLatitude(this.latitude)) {
             return {
                 status: 404,
                 error: "The latitude provided is out of range.",
                 comment: "The latitude has be in the range of [-90, 90]."
             }
         }
-        if(!this.__verifyLongitude()) {
+        if(!this.__verifyLongitude(this.longitude)) {
             return {
                 status: 404,
                 error: "The longitude provided is out of range.",
                 comment: "The latitude has be in the range of [-180, 180]."
             }
         }
-        if(!this.__verifyState()) {
+        if(!this.__verifyState(this.state)) {
             return {
                 status: 404,
                 error: "The state has to be one of the recognized indian states.",
                 comment: "Search up the possible state name and enter."
             }
         }
-        if(!this.__verifyAddress()) {
+        if(!this.__verifyAddress(this.doc.address)) {
             return {
                 status: 404,
                 error: "The Address mention does not a state corresponding to its pin code",
@@ -952,12 +948,13 @@ class NGOObject extends CollectionObject {
      */
     async create() {
         var __ngo = await this.verifyNGO()
-        if(__ngo && (__ngo.status === 404 || typeof __ngo === NGOObject)) {
+        if(__ngo && (__ngo.status === 404)) {
             return __ngo
         }
+        if(__ngo && __ngo._id) {
+            return this.__return(__ngo)
+        }
         __ngo = this.doc
-        __ngo._id = this.id
-        delete __ngo.id
         __ngo = (await new ngo(__ngo).save())._doc
         if(!__ngo) {
             return {
@@ -974,7 +971,7 @@ class NGOObject extends CollectionObject {
      * @returns NGOObject
      */
     async updateName(newName) {
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
@@ -1003,7 +1000,7 @@ class NGOObject extends CollectionObject {
                 comment: "The time mentioned is not in correct format."
             }
         }
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
@@ -1032,7 +1029,7 @@ class NGOObject extends CollectionObject {
                 comment: "The time mentioned is not in correct format."
             }
         }
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
@@ -1061,7 +1058,7 @@ class NGOObject extends CollectionObject {
                 comment: "The days mentioned is not in correct format."
             }
         }
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
@@ -1079,6 +1076,54 @@ class NGOObject extends CollectionObject {
     }
 
     /**
+     * Updated the timings of the NGO and returns the NGO object
+     * @param {String} newStartTime The new start time of the NGO
+     * @param {String} newCloseTime The new close time of the NGO
+     * @param {String} newDays The new working days of the NGO
+     * @returns NGOObject
+     */
+    async updateTimings(newStartTime, newCloseTime, newDays) {
+        if(!this.__verifyTime(newStartTime)) {
+            return {
+                status: 404,
+                comment: "The start time mentioned is not in correct format."
+            }
+        }
+        if(!this.__verifyTime(newCloseTime)) {
+            return {
+                status: 404,
+                comment: "The close time mentioned is not in correct format."
+            }
+        }
+        if(!this.__verifyDay(newDays)) {
+            return {
+                status: 404,
+                comment: "The days mentioned is not in correct format."
+            }
+        }
+        var __ngo = await this.verifyNGO()
+        if(!__ngo) {
+            return {
+                status: 404,
+                comment: "No document found in the database"
+            }
+        }
+        if(__ngo.status === 404) {
+            return __ngo
+        }
+        var newTimings = {
+            start: newStartTime,
+            close: newCloseTime,
+            days: newDays
+        }
+        if(__ngo.timings === newTimings) {
+            return this.__return(__ngo)
+        }
+        __ngo = (await __ngo.set("timings", newTimings).save())._doc
+        return this.__return(__ngo)
+    }
+
+    /**
      * Updates the latitude of NGO and returns the collection object for further use
      * @param {Number} newLat The new latitude of the NGO that is to be updated
      * @returns NGOObject
@@ -1090,7 +1135,7 @@ class NGOObject extends CollectionObject {
                 comment: "The nwe latitude format mentioned is incorrect. Use a number in the range [-90, 90]."
             }
         }
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
@@ -1116,10 +1161,10 @@ class NGOObject extends CollectionObject {
         if(!this.__verifyLongitude(newLong)) {
             return {
                 status: 404,
-                comment: "The nwe latitude format mentioned is incorrect. Use a number in the range [-90, 90]."
+                comment: "The nwe latitude format mentioned is incorrect. Use a number in the range [-180, 180]."
             }
         }
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
@@ -1133,6 +1178,46 @@ class NGOObject extends CollectionObject {
             return this.__return(__ngo)
         }
         __ngo = (await __ngo.set("location", {...__ngo.location, long: newLong}).save())._doc
+        return this.__return(__ngo)
+    }
+
+    /**
+     * Updated the location and returns the NGO Object.
+     * @param {Number} newLat The new latitude to update that has be in the range of [-90, 90]
+     * @param {Number} newLong The new longitude that has to be in the range of [-180, 180]
+     * @returns NGOobject
+     */
+    async updateLocation(newLat, newLong) {
+        if(!this.__verifyLatitude(newLat)) {
+            return {
+                status: 404,
+                comment: "The nwe latitude format mentioned is incorrect. Use a number in the range [-90, 90]."
+            }
+        }
+        if(!this.__verifyLongitude(newLong)) {
+            return {
+                status: 404,
+                comment: "The nwe latitude format mentioned is incorrect. Use a number in the range [-180, 180]."
+            }
+        }
+        var __ngo = await this.verifyNGO()
+        if(!__ngo) {
+            return {
+                status: 404,
+                comment: "No document found in the database"
+            }
+        }
+        if(__ngo.status === 404) {
+            return __ngo
+        }
+        var newLocation = {
+            lat: newLat,
+            long: newLong
+        }
+        if(__ngo.location === newLocation) {
+            return this.__return(__ngo)
+        }
+        __ngo = (await __ngo.set("location", newLocation).save())._doc
         return this.__return(__ngo)
     }
 
@@ -1154,7 +1239,7 @@ class NGOObject extends CollectionObject {
                 comment: "The new phone number mentioned is already in the database."
             }
         } 
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
@@ -1189,7 +1274,7 @@ class NGOObject extends CollectionObject {
                 comment: "The new email address mentioned is already in the database."
             }
         } 
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
@@ -1216,7 +1301,7 @@ class NGOObject extends CollectionObject {
      * @returns NGOObject
      */
     async updateAddress(newLine1, newLine2, newCityOrVillage, newState, newPinCode) {
-        if(!this.__verifyPinCode()) {
+        if(!this.__verifyPinCode(newPinCode)) {
             return {
                 status: 404,
                 comment: "The pin code mentioned is not in the postal code range."
@@ -1242,7 +1327,7 @@ class NGOObject extends CollectionObject {
                 comment: "The mentioned pin code does not correspond to the mentioned state. Please change one of then with respect to the other."
             }
         }
-        var __ngo = this.verifyNGO()
+        var __ngo = await this.verifyNGO()
         if(!__ngo) {
             return {
                 status: 404,
