@@ -1154,8 +1154,12 @@ app.post("/ngo/updateLongitude", async (req, res) => {
 })
 
 
-app.use(express.static("docs"))
+app.use(express.static("./logo"))
+app.get(/\/logo(.png)?$/, async (_, res) => {
+    res.sendFile("./logo/logo.png")
+})
 
+app.use(express.static("docs"))
 app.get("/", (_, res) => {
     res.sendFile("./docs/index.html")
 })

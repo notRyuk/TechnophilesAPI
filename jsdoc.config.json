@@ -23,9 +23,12 @@
         "monospaceLinks": false,
         "default": {
             "staticFiles": {
-                "include": ["./styles/style.css", "./styles/prettify.css"]
+                "include": ["./styles/style.css", "./styles/prettify.css", "./logo/logo.png"]
             },
             "includeDate": false
+        },
+        "logo": {
+            "url": "./logo/logo.png"
         }
     },
     "docdash": {
@@ -41,7 +44,8 @@
         },
         "openGraph": {
             "title": "TechnophilesAPI",
-            "type": "website"
+            "type": "website",
+            "image": "logo.png"
         },
         "scripts": ["./style.css"],
         "commonNav": true

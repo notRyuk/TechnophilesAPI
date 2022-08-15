@@ -1,6 +1,14 @@
-# Technophiles API v1.2
+<h1 align="center">
+    Technophiles API v1.2
+</h1>
 
 <p align="center">
+  <style>
+    img {
+        position: relative;
+        width: 70%;
+    }
+  </style>
   <img alt="Logo" src="./logo.png">
 </p>
 

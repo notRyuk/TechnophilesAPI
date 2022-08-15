@@ -36,7 +36,7 @@ article a {
 
 #nav-search,
 #nav-search:active {
-  background-color: #ad979e;
+  background-color: #b9a28b;
   border: none;
   outline: none;
   font-family: Consolas, Monaco, 'Andale Mono', monospace;
@@ -161,12 +161,13 @@ code {
 .navicon::after,
 .nav-trigger:checked+label.plus .navicon:before,
 .nav-trigger:checked+label.x .navicon:before,
-.nav-trigger:checked + label.plus .navicon:after,
-.nav-trigger:checked + label.x .navicon:after {
+.nav-trigger:checked+label.plus .navicon:after,
+.nav-trigger:checked+label.x .navicon:after {
   background: #ad979e;
 }
 
-.prettyprint.source, .prettyprint code {
+.prettyprint.source,
+.prettyprint code {
   background-color: #1e2227 !important;
 }
 
