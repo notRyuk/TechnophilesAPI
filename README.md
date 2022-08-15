@@ -9,7 +9,7 @@
         width: 70%;
     }
   </style>
-  <img alt="Logo" src="./logo.png">
+  <img alt="Logo" src="./logo/logo.png">
 </p>
 
 KeyBlue is a portal created by Tricolored Technophiles for:
