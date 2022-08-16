@@ -1,4 +1,3 @@
-import { user } from "./mongoose.js";
 import { promisify } from 'util';
 import { exec as exec1} from 'child_process';
 
