@@ -10,15 +10,15 @@ KeyBlue is a portal created by Tricolored Technophiles for:
 - Creating awareness blogs about Disaster Management and organizing mock drills
 - Providing status of each registered rehabilitation organizations and active ranger
 
-The Technophiles API serves as the backend to the the KeyBlue Android app and website. The documenation for the API can be found [here](https://techophilesapi.herokuapp.com/BlogObject.html)
+The Technophiles API serves as the backend to the the KeyBlue Android app and website. The documentation for the API can be found [here](https://technophilesapi.herokuapp.com/BlogObject.html)
 
 ## More about KeyBlue
 
 - Service is provided in multiple languages to ensure inclusivity and reach.
-- Ensures credibility through a verificaion system.
+- Ensures credibility through a verification system.
 - Provides real-time assistance via Bluetooth technology connecting all nearby rehabilitation organizations and rangers in the disaster prone areas.
 - Uses the latest industry-standard technology stack to provide the smoothest experience to the user.
-- Bridges the connectivity gap between the rescuers and the rescuees through affilation with NGOs.
+- Bridges the connectivity gap between the rescuers and the rescuees through affiliation with NGOs.
 
 ## Basic API Usage
 
