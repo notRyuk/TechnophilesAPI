@@ -814,7 +814,7 @@ app.post("/ngo/create", async (req, res) => {
     var values = Object.values(body)
     var required = ["id", "name", "timings", "location", "phone", "email", "address"]
     for(var i of required) {
-        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
             res.status(404)
             res.send({
                 status: 404,
@@ -830,8 +830,8 @@ app.post("/ngo/create", async (req, res) => {
         body.timings.start,
         body.timings.close,
         body.timings.days,
-        body.location.latitude,
-        body.location.longitude,
+        body.location.lat,
+        body.location.long,
         body.phone,
         body.email,
         body.address.line_1,
