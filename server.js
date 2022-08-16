@@ -6,6 +6,7 @@ import compression from "compression";
 import { PORT } from "./config.js";
 import { UserObject, CollectionObject, BlogObject, NGOObject } from "./db.js";
 import { user, blog, ngo } from "./mongoose.js";
+import { tokenizer } from "./helpers.js";
 
 const app = express()
 
@@ -141,7 +142,7 @@ app.post("/user/create", async (req, res) => {
         body.userName.trim(),
         body.firstName.trim(),
         body.lastName.trim(),
-        body.password.trim(),
+        tokenizer.encrypt(body.password.trim()),
         body.email.trim(),
         []
     ).create()).doc
@@ -200,6 +201,15 @@ app.post("/user/updateUserName", async (req, res) => {
         })
         return
     }
+    if(tokenizer.decrypt(newUser.encryption) !== tokenizer.decrypt(body.token.trim())) {
+        res.status(400)
+        res.send({
+            status: 400,
+            error: "The given passwords do not match.",
+            comment: "make sure the passwords match."
+        })
+        return
+    }
     newUser = (await new UserObject(
         newUser._id,
         newUser.name.first,
@@ -243,8 +253,7 @@ app.post("/user/updatePassword", async (req, res) => {
             return
         }
     }
-    // Encryption of the new password and change the conditional statement
-    if(body.token === body.newPassword) {
+    if(tokenizer.decrypt(body.token) === body.newPassword) {
         res.status(404)
         res.send({
             status: 404,
@@ -270,6 +279,15 @@ app.post("/user/updatePassword", async (req, res) => {
         })
         return
     }
+    if(tokenizer.decrypt(newUser.encryption) !== tokenizer.decrypt(body.token.trim())) {
+        res.status(400)
+        res.send({
+            status: 400,
+            error: "The given passwords do not match.",
+            comment: "make sure the passwords match."
+        })
+        return
+    }
     newUser = (await new UserObject(
         newUser._id,
         newUser.name.first,
@@ -277,7 +295,7 @@ app.post("/user/updatePassword", async (req, res) => {
         newUser.encryption,
         newUser.email,
         newUser.blogs
-    ).updateEncryption(body.newPassword)) // Enter the param for new encrypted password
+    ).updateEncryption(tokenizer.encrypt(body.newPassword)))
     if(newUser.status) {
         res.status(newUser.status)
         res.send(newUser)
@@ -337,6 +355,15 @@ app.post("/user/updateEmail", async (req, res) => {
             status: 404,
             error: "The input user is not found in the database.",
             comment: "Enter a valid username!"
+        })
+        return
+    }
+    if(tokenizer.decrypt(newUser.encryption) !== tokenizer.decrypt(body.token.trim())) {
+        res.status(400)
+        res.send({
+            status: 400,
+            error: "The given passwords do not match.",
+            comment: "make sure the passwords match."
         })
         return
     }
@@ -407,6 +434,15 @@ app.post("/user/updateName", async (req, res) => {
         })
         return
     }
+    if(tokenizer.decrypt(newUser.encryption) !== tokenizer.decrypt(body.token.trim())) {
+        res.status(400)
+        res.send({
+            status: 400,
+            error: "The given passwords do not match.",
+            comment: "make sure the passwords match."
+        })
+        return
+    }
     newUser = (await new UserObject(
         newUser._id,
         newUser.name.first,
@@ -463,6 +499,15 @@ app.delete("/user/delete", async (req, res) => {
             status: 404,
             error: "The input user is not found in the database.",
             comment: "Enter a valid username!"
+        })
+        return
+    }
+    if(tokenizer.decrypt(newUser.encryption) !== tokenizer.decrypt(body.token.trim())) {
+        res.status(400)
+        res.send({
+            status: 400,
+            error: "The given passwords do not match.",
+            comment: "make sure the passwords match."
         })
         return
     }
