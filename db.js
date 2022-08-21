@@ -77,7 +77,7 @@ class CollectionObject {
      * @returns Boolean
      */
     isEmailValid(email) {
-        return /^[a-z][a-z0-9_\.-]+\@[a-z0-9\-]+\.[a-z]+/.test(email)
+        return /^[a-z0-9_\.-]+\@[a-z0-9\-]+\.[a-z]+/.test(email)
     }
 
     /**
