@@ -75,7 +75,8 @@ const __dirname = dirname(__filename);
  */
 app.get(/^\/(user|blog|ngo)\/(findByID|findAll)$/, async (req, res) => {
     const path = req.path
-    const body = req.body
+    const body = Object.keys(req.body).length?req.body:req.query
+    console.log(body)
     if(path.includes("findByID") && !body.id) {
         res.status(404)
         res.send({
@@ -539,7 +540,7 @@ app.delete("/user/delete", async (req, res) => {
  * @bodyparam {NameOfUser} name The name of the user to search
  */
 app.get("/user/findByName", async (req, res) => {
-    const body = req.body
+    const body = Object.keys(req.body).length?req.body:req.query
     var name = {
         first: "",
         last: ""
@@ -598,7 +599,7 @@ app.get("/user/findByName", async (req, res) => {
  * @bodyparam {String} email The email id to fetch
  */
 app.get("/user/findByEmail", async (req, res) => {
-    const body = req.body
+    const body = Object.keys(req.body).length?req.body:req.query
     if(!body.email || body.email.length === 0) {
         res.status(404)
         res.send({
@@ -773,7 +774,7 @@ app.delete("/blog/delete", async (req, res) => {
  * @bodyparam {String} key The key to search in the blogs
  */
 app.get("/blog/findByName", async (req, res) => {
-    const body = req.body
+    const body = Object.keys(req.body).length?req.body:req.query
     if(!body.key || body.key.trim().length === 0) {
         res.status(404)
         res.send({
