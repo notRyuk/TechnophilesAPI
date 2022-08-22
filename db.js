@@ -456,7 +456,7 @@ class UserObject extends CollectionObject {
     }
 
     async findByEmail(email) {
-        return (await this.col.find({})).filter(e => e.email === email)
+        return (await this.col.find({email: email}))
     }
 }
 
