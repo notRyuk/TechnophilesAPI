@@ -1756,11 +1756,16 @@ class EmergencyObject extends CollectionObject {
         }
     }
 
+    /**
+     * The method to update the address of the Emergency Contact
+     * @param {String} newAddress The new address to be updated in the database
+     * @returns EmergencyObject
+     */
     async updateAddress(newAddress) {
         if(newAddress.length === 0) {
             return {
                 status: 404,
-                comment: "A new address parameter is required to update the phone of the Emergency Service"
+                comment: "A new address parameter is required to update the address of the Emergency Service"
             }
         }
         var __emergency = await this.verify()
@@ -1779,8 +1784,43 @@ class EmergencyObject extends CollectionObject {
             comment: "There is an error updating the object."
         }
     }
+
+    /**
+     * The method to update the email of the Emergency Service
+     * @param {String} newEmail The new email to be updated to the Emergency Service
+     * @returns EmergencyObject
+     */
+    async updateEmail(newEmail) {
+        if(newEmail.length === 0) {
+            return {
+                status: 404,
+                comment: "A new email parameter is required to update the email of the Emergency Service."
+            }
+        }
+        if(!this.isEmailValid(newEmail)) {
+            return {
+                status: 404,
+                comment: "The entered email is not valid."
+            }
+        }
+        var __emergency = await this.verify()
+        if(!__emergency) {
+            return {
+                status: 404,
+                comment: "The requested id is not in the database."
+            }
+        }
+        __emergency = (await __emergency.set("email", newAddress).save())._doc
+        if(__emergency) {
+            return this.__return(__emergency)
+        }
+        return {
+            status: 404,
+            comment: "There is an error updating the object."
+        }
+    }
 }
 
 export {
-    UserObject, BlogObject, NGOObject, CollectionObject
+    UserObject, BlogObject, NGOObject, EmergencyObject, CollectionObject
 }
