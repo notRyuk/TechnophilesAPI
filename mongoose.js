@@ -23,8 +23,6 @@ const UserBlogSchema = {
  * @property {String} email The email of the user that is in the collection
  * @property {UserBlogSchema[]} blogs The Array of blogs written by the user
 */
-
-
 /**
  * The default format for Emergency Contacts of the user.
  * @typedef {Object} EmergencyContact The emergency contact of the user
@@ -117,7 +115,6 @@ const BlogSchema = new Schema({
  * @property {String} email The email Id of the NGO
  * @property {AddressOfNGO} address The address of the NGO
 */
-
 const NGOSchema = new Schema({
     _id: String,
     name: {type: String, required: true},
@@ -141,10 +138,23 @@ const NGOSchema = new Schema({
     }
 })
 
+const EmergencySchema = new Schema({
+    _id: String,
+    name: {type: String, required: true},
+    location: {
+        lat: {type: Number, required: true},
+        long: {type: Number, required: true}
+    },
+    phone: {type: String, required: true},
+    address: {type: String, required: true}
+})
+
 const user = model("user", UserSchema)
 const blog = model("blog", BlogSchema)
 const ngo = model("NGO", NGOSchema)
+const emergency = model("EmergencyContact", EmergencySchema)
 
 export {
-    user, blog, ngo, UserBlogSchema, EmergencyContactSchema
+    user, blog, ngo, emergency,
+    UserBlogSchema, EmergencyContactSchema
 }
