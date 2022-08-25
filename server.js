@@ -1264,7 +1264,7 @@ app.post("/emergency/create", async (req, res) => {
  * @memberof Emergency
  */
 app.post("/emergency/updateName", async (req, res) => {
-
+    res.send({status: 200, comment: "This method is yet to be built"})
 })
 
 /**
@@ -1273,6 +1273,7 @@ app.post("/emergency/updateName", async (req, res) => {
  * @memberof Emergency
  */
 app.post("/emergency/updateLatitude", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1282,6 +1283,7 @@ app.post("/emergency/updateLatitude", async (req, res) => {
  * @memberof Emergency
  */
 app.post("/emergency/updateLongitude", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1291,6 +1293,7 @@ app.post("/emergency/updateLongitude", async (req, res) => {
  * @memberof Emergency
  */
 app.post("/emergency/updateLocation", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1300,6 +1303,7 @@ app.post("/emergency/updateLocation", async (req, res) => {
  * @memberof Emergency
  */
 app.post("/emergency/updatePhone", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1309,6 +1313,7 @@ app.post("/emergency/updatePhone", async (req, res) => {
  * @memberof Emergency
  */
 app.post("/emergency/updateAddress", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1318,6 +1323,7 @@ app.post("/emergency/updateAddress", async (req, res) => {
  * @memberof Emergency
  */
 app.post("/emergency/update", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1327,6 +1333,7 @@ app.post("/emergency/update", async (req, res) => {
  * @memberof Emergency
  */
 app.get("/emergency/findByName", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1336,6 +1343,7 @@ app.get("/emergency/findByName", async (req, res) => {
  * @memberof Emergency
  */
 app.get("/emergency/findByEmail", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1345,6 +1353,7 @@ app.get("/emergency/findByEmail", async (req, res) => {
  * @memberof Emergency
  */
 app.get("/emergency/findByPhone", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1354,6 +1363,7 @@ app.get("/emergency/findByPhone", async (req, res) => {
  * @memberof Emergency
  */
 app.get("/emergency/findByType", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
@@ -1363,6 +1373,7 @@ app.get("/emergency/findByType", async (req, res) => {
  * @memberof Emergency
  */
 app.get("/emergency/findByType", async (req, res) => {
+    res.send({status: 200, comment: "This method is yet to be built"})
 
 })
 
