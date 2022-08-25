@@ -60,7 +60,7 @@ const UserSchema = new Schema({
     emergencyContacts: [{
         _id: Number, required: true,
         name: String, required: true,
-        relation: String, required: true, default: "family",
+        relation: {type: String, required: true, default: "family"},
         phone: String, required: true,
         email: String, required: true
     }]
