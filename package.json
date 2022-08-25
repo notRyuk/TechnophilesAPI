@@ -24,6 +24,7 @@
     "docdash": "^1.2.0",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
+    "express-jwt": "^7.7.5",
     "jsdoc": "^3.6.11",
     "jsdoc-route-plugin": "^0.1.0",
     "mongoose": "^6.5.2",
