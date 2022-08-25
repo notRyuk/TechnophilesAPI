@@ -5,7 +5,7 @@ import compression from "compression";
 import cors from "cors";
 
 import { PORT } from "./config.js";
-import { UserObject, CollectionObject, BlogObject, NGOObject } from "./db.js";
+import { UserObject, CollectionObject, BlogObject, NGOObject, EmergencyObject } from "./db.js";
 import { user, blog, ngo } from "./mongoose.js";
 import { tokenizer } from "./helpers.js";
 
@@ -14,7 +14,6 @@ const app = express()
 app.use(cors());
 app.use(express.json())
 app.use(compression())
-app.use("/token", )
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -26,55 +25,71 @@ const __dirname = dirname(__filename);
 */
 
 /**
- * @namespace UserRoutes
+ * @namespace User
 */
 /**
- * @namespace BlogRoutes
+ * @namespace Blog
 */
 /**
- * @namespace NGORoutes
+ * @namespace NGO
+*/
+/**
+ * @namespace Emergency
 */
 
 /**
  * This routes helps in finding a collection element by ID
  * @name FindByID
  * @route {GET} /user/findByID
- * @memberof UserRoutes
+ * @memberof User
  * @bodyparam {String} id The id of the user to be searched for
 */
 /**
  * This routes helps in finding a collection element by ID
  * @name FindByID
  * @route {GET} /blog/findByID
- * @memberof BlogRoutes
+ * @memberof Blog
  * @bodyparam {String} id he id of the blog to be searched for
 */
 /**
  * This routes helps in finding a collection element by ID
  * @name FindByID
  * @route {GET} /ngo/findByID
- * @memberof NGORoutes
+ * @memberof NGO
+ * @bodyparam {String} id The id of the collection to be searched for
+*/
+/**
+ * This routes helps in finding a collection element by ID
+ * @name FindByID
+ * @route {GET} /ngo/findByID
+ * @memberof Emergency
  * @bodyparam {String} id The id of the collection to be searched for
 */
 /**
  * This routes helps in finding a collection element by ID
  * @name findAll
- * @memberof UserRoutes
+ * @memberof User
  * @route {GET} /user/findAll 
 */
 /**
  * This routes helps in finding a collection element by ID
  * @name findAll
- * @memberof BlogRoutes
+ * @memberof Blog
  * @route {GET} /blog/findAll 
 */
 /**
  * This routes helps in finding a collection element by ID
  * @name findAll
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {GET} /blog/findAll 
  */
-app.get(/^\/(user|blog|ngo)\/(findByID|findAll)$/, async (req, res) => {
+/**
+ * This routes helps in finding a collection element by ID
+ * @name findAll
+ * @memberof Emergency
+ * @route {GET} /blog/findAll 
+ */
+app.get(/^\/(user|blog|ngo|emergency)\/(findByID|findAll)$/, async (req, res) => {
     const path = req.path
     const body = Object.keys(req.body).length?req.body:req.query
     console.log(body)
@@ -118,7 +133,7 @@ app.get(/^\/(user|blog|ngo)\/(findByID|findAll)$/, async (req, res) => {
 /**
  * This method creates a new user object in the database.
  * @name CreateUser
- * @memberof UserRoutes
+ * @memberof User
  * @route {POST} /user/create
  * @bodyparam {String} userName The username of the user 
  * @bodyparam {String} firstName The first name of the user 
@@ -157,7 +172,7 @@ app.post("/user/create", async (req, res) => {
 /**
  * This method updates the username of the mentioned user.
  * @name UpdateUserName
- * @memberof UserRoutes
+ * @memberof User
  * @route {POST} /user/updateUserName
  * @bodyparam {String} userName The username of the user
  * @bodyparam {String} token The token which is returned
@@ -235,7 +250,7 @@ app.post("/user/updateUserName", async (req, res) => {
 /**
  * This method updates the password of the mentioned user.
  * @name UpdatePassword
- * @memberof UserRoutes
+ * @memberof User
  * @route {POST} /user/updatePassword
  * @bodyparam {String} userName The username of the user
  * @bodyparam {String} token The tokenized password of the user
@@ -313,7 +328,7 @@ app.post("/user/updatePassword", async (req, res) => {
 /**
  * The method to update the email id of the user
  * @name UpdateEmail
- * @memberof UserRoutes
+ * @memberof User
  * @route {POST} /user/updateEmail
  * @bodyparam {String} userName The username of the user
  * @bodyparam {String} The tokenized password of the user
@@ -392,7 +407,7 @@ app.post("/user/updateEmail", async (req, res) => {
 /**
  * The method to update the name of the user
  * @name UpdateName
- * @memberof UserRoutes
+ * @memberof User
  * @route {POST} /user/updateName
  * @bodyparam {String} userName The username of the user
  * @bodyparam {String} token The tokenized password of the user
@@ -468,7 +483,7 @@ app.post("/user/updateName", async (req, res) => {
 /**
  * The method to delete the user from the database
  * @name DeleteUser
- * @memberof UserRoutes
+ * @memberof User
  * @route {DELETE} /user/delete
  * @bodyparam {String} userName The username of the user
  * @bodyparam {String} token The tokenized password of the user
@@ -536,7 +551,7 @@ app.delete("/user/delete", async (req, res) => {
 /**
  * The method to fetch users by name
  * @name FindByName
- * @memberof UserRoutes
+ * @memberof User
  * @route {GET} /user/findByName
  * @bodyparam {NameOfUser} name The name of the user to search
  */
@@ -595,7 +610,7 @@ app.get("/user/findByName", async (req, res) => {
 /**
  * The method to identify the users by email
  * @name FindByEmail
- * @memberof UserRoutes
+ * @memberof User
  * @route {GET} /user/findByEmail
  * @bodyparam {String} email The email id to fetch
  */
@@ -641,7 +656,7 @@ app.get("/user/findByEmail", async (req, res) => {
 /**
  * The method to create the blog written by the user
  * @name CreateBlog
- * @memberof BlogRoutes
+ * @memberof Blog
  * @route {POST} /blog/create
  * @bodyparam {String} userName The username of the user that wrote the blog
  * @bodyparam {String} name The name of the blog
@@ -699,7 +714,7 @@ app.post("/blog/create", async (req, res) => {
  * <br>
  * <b>Note:</b> Any one of the name or description or content have to be present to update the blog.
  * @name UpdateBlog
- * @memberof BlogRoutes
+ * @memberof Blog
  * @route {POST} /blog/update
  * @bodyparam {String} [newName=""] The new name of the blog
  * @bodyparam {String} [newDescription=""] The new description of the blog
@@ -738,7 +753,7 @@ app.post("/blog/update", async (req, res) => {
 /**
  * The method to delete the blog written by the user
  * @name DeleteBlog
- * @memberof BlogRoutes
+ * @memberof Blog
  * @route {DELETE} /blog/delete
  * @bodyparam {String} id The blog to delete
  */
@@ -770,7 +785,7 @@ app.delete("/blog/delete", async (req, res) => {
 /**
  * The method to find the blog by name
  * @name FindByName
- * @memberof BlogRoutes
+ * @memberof Blog
  * @route {GET} /blog/findByName
  * @bodyparam {String} key The key to search in the blogs
  */
@@ -802,7 +817,7 @@ app.get("/blog/findByName", async (req, res) => {
 /**
  * The method to crete the NGO object in the database
  * @name CreateNGO
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/create
  * @bodyparam {String} id The id of the NGO
  * @bodyparam {String} name The name of the NGO
@@ -851,7 +866,7 @@ app.post("/ngo/create", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateName
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateName
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {String} newName The new name of the NGO
@@ -880,7 +895,7 @@ app.post("/ngo/updateName", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateStartTime
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateStartTime
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {String} newStartTime The new start time of the NGO
@@ -909,7 +924,7 @@ app.post("/ngo/updateStartTime", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateCloseTime
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateCloseTime
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {String} newCloseTime The new close time of the NGO
@@ -938,7 +953,7 @@ app.post("/ngo/updateCloseTime", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateDays
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateDays
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {String} newDays The new working days of the NGO
@@ -967,7 +982,7 @@ app.post("/ngo/updateDays", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateTimings
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateTimings
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {String} newDays The new working days of the NGO
@@ -998,7 +1013,7 @@ app.post("/ngo/updateTimings", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateLatitude
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateLatitude
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {Number} newLatitude The new close time of the NGO
@@ -1036,7 +1051,7 @@ app.post("/ngo/updateLatitude", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateLongitude
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateLongitude
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {Number} newLongitude The new close time of the NGO
@@ -1074,7 +1089,7 @@ app.post("/ngo/updateLongitude", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateLocation
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateLocation
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {Number} newLatitude The new close time of the NGO
@@ -1114,7 +1129,7 @@ app.post("/ngo/updateLongitude", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdatePhone
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updatePhone
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {String} newPhone The new close time of the NGO
@@ -1145,7 +1160,7 @@ app.post("/ngo/updateLongitude", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateEmail
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateEmail
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {String} newEmail The new close time of the NGO
@@ -1175,7 +1190,7 @@ app.post("/ngo/updateLongitude", async (req, res) => {
 /**
  * The method to update the name of the NGO
  * @name UpdateAddress
- * @memberof NGORoutes
+ * @memberof NGO
  * @route {POST} /ngo/updateAddress
  * @bodyparam {Sting} id The id of the NGO
  * @bodyparam {AddressOfNGO} newAddress The new close time of the NGO
@@ -1201,6 +1216,156 @@ app.post("/ngo/updateLongitude", async (req, res) => {
     res.status(newNGO.status || 200)
     res.send(newNGO.doc || newNGO)
 })
+
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ * @route {POST} /emergency/create
+ * @bodyparam {String} id The id of the Emergency Unit
+ * @bodyparam {String} name The name of the Emergency Unit
+ * @bodyparam {Number} latitude The latitude of the Emergency Unit
+ * @bodyparam {Number} longitude The longitude of the Emergency Unit
+ * @bodyparam {String} phone The international format of phone number
+ * @bodyparam {String} email The email of the Emergency Unit
+ */
+app.post("/emergency/create", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "name", "latitude", "phone", "email", "longitude"]
+    for(var i of required) {
+        if(!keys.includes(i) || typeof keys === String && values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var emergency = await new EmergencyObject(
+        body.id,
+        body.name,
+        body.latitude,
+        body.longitude,
+        body.phone,
+        body.email
+    ).create()
+    res.status(emergency.status || 200)
+    res.send(emergency.doc || emergency)
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.post("/emergency/updateName", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.post("/emergency/updateLatitude", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.post("/emergency/updateLongitude", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.post("/emergency/updateLocation", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.post("/emergency/updatePhone", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.post("/emergency/updateAddress", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.post("/emergency/update", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.get("/emergency/findByName", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.get("/emergency/findByEmail", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.get("/emergency/findByPhone", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.get("/emergency/findByType", async (req, res) => {
+
+})
+
+/**
+ * The method to create the Emergency Object
+ * @name CreateEmergency
+ * @memberof Emergency
+ */
+app.get("/emergency/findByType", async (req, res) => {
+
+})
+
 
 
 app.use(express.static(join(__dirname, "logo")))
