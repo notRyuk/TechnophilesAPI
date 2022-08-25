@@ -58,11 +58,11 @@ const UserSchema = new Schema({
         default: []
     },
     emergencyContacts: [{
-        _id: Number, required: true,
-        name: String, required: true,
+        _id: Number,
+        name: {type: String, required: true},
         relation: {type: String, required: true, default: "family"},
-        phone: String, required: true,
-        email: String, required: true
+        phone: {type: String, required: true},
+        email: {type: String, required: true}
     }]
 })
 
