@@ -4,7 +4,7 @@
     <link rel="icon" type="image/x-icon" href="/circular.png">
     
     <meta charset="utf-8">
-    <title>UserObject - TechnophilesAPI</title>
+    <title>EmergencyObject - TechnophilesAPI</title>
     
     <meta name="description" content="The API made by TriColored Technophiles SIH team for easy handling of frond-end apps." />
     
@@ -48,7 +48,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">UserObject</h1>
+    <h1 class="page-title">EmergencyObject</h1>
     
 
     
@@ -61,7 +61,7 @@
 <header>
     
         <h2>
-        UserObject
+        EmergencyObject
         </h2>
         
     
@@ -75,7 +75,7 @@
 
     
 
-    <h4 class="name" id="UserObject"><span class="type-signature"></span>new UserObject<span class="signature">(id, firstName<span class="signature-attributes">opt</span>, lastName<span class="signature-attributes">opt</span>, encryption<span class="signature-attributes">opt</span>, email<span class="signature-attributes">opt</span>, blogs<span class="signature-attributes">opt</span>, emergencyContacts<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="EmergencyObject"><span class="type-signature"></span>new EmergencyObject<span class="signature">(id, name, latitude, longitude, phone, email, address)</span><span class="type-signature"></span></h4>
 
     
 
@@ -87,7 +87,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line154">line 154</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1503">line 1503</a>
     </li></ul></dd>
     
 
@@ -127,7 +127,7 @@
 
 
 <div class="description usertext">
-    <p>The main class for all the user collection operations that can be done with the users or volunteers.</p>
+    <p>The constructor for the class of the class of Emergency Information</p>
 </div>
 
 
@@ -152,8 +152,6 @@
 
         <th>Type</th>
 
-        
-        <th>Attributes</th>
         
 
         
@@ -180,25 +178,17 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>ID of the user to be saved in the database</p></td>
+            <td class="description last"><p>The id of the emergency unit</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>firstName</code></td>
+                <td class="name"><code>name</code></td>
             
 
             <td class="type">
@@ -211,27 +201,63 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>First Name of the user to be saved in the database</p></td>
+            <td class="description last"><p>The full name of the emergency unit</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>lastName</code></td>
+                <td class="name"><code>latitude</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The latitude of the emergency unit</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>longitude</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The longitude of the emergency unit</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>phone</code></td>
             
 
             <td class="type">
@@ -244,53 +270,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>Last Name of the user to be saved in the database</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>encryption</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>Password of the user to be saved in the database</p></td>
+            <td class="description last"><p>The phone number of the emergency unit</p></td>
         </tr>
 
     
@@ -310,86 +293,33 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>Email of the user to be saved in the database</p></td>
+            <td class="description last"><p>The email of the emergency unit</p></td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>blogs</code></td>
+                <td class="name"><code>address</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;<a href="global.html#UserBlogSchema">UserBlogSchema</a>></span>
+<span class="param-type">String</span>
 
 
             
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>List of Simplified blogs to be saved in the database</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>emergencyContacts</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Array.&lt;<a href="global.html#EmergencyContact">EmergencyContact</a>></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"><p>The list of emergency contact of the user. (Max length of the list should not exceed 3)</p></td>
+            <td class="description last"><p>The address of the emergency unit</p></td>
         </tr>
 
     
@@ -440,7 +370,7 @@
 
     
 
-    <h4 class="name" id="deleteEmergencyContact"><span class="type-signature">(async) </span>deleteEmergencyContact<span class="signature">(id)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="create"><span class="type-signature">(async) </span>create<span class="signature">()</span><span class="type-signature"></span></h4>
 
     
 
@@ -452,7 +382,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line565">line 565</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1550">line 1550</a>
     </li></ul></dd>
     
 
@@ -492,7 +422,7 @@
 
 
 <div class="description usertext">
-    <p>The method to delete an emergency contact</p>
+    <p>The method to create the EmergencyObject</p>
 </div>
 
 
@@ -503,55 +433,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">Number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The priority of the emergency contact to delete</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -572,153 +453,7 @@
 
         
 <div class="param-desc">
-    <p>UserObject</p>
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="extractEmergencyContacts"><span class="type-signature">(async) </span>extractEmergencyContacts<span class="signature">(id)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line508">line 508</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The method to extract the emergency contacts of a user</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>id</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The id of the user</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>List of Emergency Contacts</p>
+    <p>EmergencyObject</p>
 </div>
 
 
@@ -744,7 +479,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line499">line 499</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1883">line 1883</a>
     </li></ul></dd>
     
 
@@ -784,7 +519,7 @@
 
 
 <div class="description usertext">
-    <p>The method to find the user by their email</p>
+    <p>The method to find by email of the service.</p>
 </div>
 
 
@@ -838,7 +573,7 @@
 
             
 
-            <td class="description last"><p>The email of the user</p></td>
+            <td class="description last"><p>The email of the service to search for</p></td>
         </tr>
 
     
@@ -864,7 +599,7 @@
 
         
 <div class="param-desc">
-    <p>User Object in the Collection</p>
+    <p>List of Emergency Service numbers</p>
 </div>
 
 
@@ -878,7 +613,7 @@
 
     
 
-    <h4 class="name" id="findByFirstName"><span class="type-signature">(async) </span>findByFirstName<span class="signature">(firstName)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="findByName"><span class="type-signature">(async) </span>findByName<span class="signature">(name)</span><span class="type-signature"></span></h4>
 
     
 
@@ -890,7 +625,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line472">line 472</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1874">line 1874</a>
     </li></ul></dd>
     
 
@@ -930,153 +665,7 @@
 
 
 <div class="description usertext">
-    <p>The method to find the user by first name</p>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>firstName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>The first name of the user</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>User Object in collection</p>
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="findByFullName"><span class="type-signature">(async) </span>findByFullName<span class="signature">(name)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line490">line 490</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-<div class="description usertext">
-    <p>The method to find the user by full name (first name + last name)</p>
+    <p>The method to find by name of the service.</p>
 </div>
 
 
@@ -1130,7 +719,7 @@
 
             
 
-            <td class="description last"><p>The full name of the user</p></td>
+            <td class="description last"><p>The name to search in the database</p></td>
         </tr>
 
     
@@ -1156,7 +745,7 @@
 
         
 <div class="param-desc">
-    <p>User Object in the collection</p>
+    <p>List of Emergency Service numbers</p>
 </div>
 
 
@@ -1170,7 +759,7 @@
 
     
 
-    <h4 class="name" id="findByLastName"><span class="type-signature">(async) </span>findByLastName<span class="signature">(lastName)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="findByPhone"><span class="type-signature">(async) </span>findByPhone<span class="signature">(phone)</span><span class="type-signature"></span></h4>
 
     
 
@@ -1182,7 +771,291 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line481">line 481</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1892">line 1892</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>phone</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The phone of the service to search for</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>List of Emergency Service numbers</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="findByType"><span class="type-signature">(async) </span>findByType<span class="signature">(type)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1901">line 1901</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>type</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The type of the emergency service to search for (Hospital = 1, Police = 2, Fire = 3)</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>List of Emergency Service numbers</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="update"><span class="type-signature">(async) </span>update<span class="signature">(newDoc)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1835">line 1835</a>
     </li></ul></dd>
     
 
@@ -1222,7 +1095,7 @@
 
 
 <div class="description usertext">
-    <p>The method to find by last name of the user</p>
+    <p>The method to update the complete Emergency Service Object</p>
 </div>
 
 
@@ -1260,13 +1133,13 @@
 
         <tr>
             
-                <td class="name"><code>lastName</code></td>
+                <td class="name"><code>newDoc</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">String</span>
+<span class="param-type">EmergencyElement</span>
 
 
             
@@ -1276,7 +1149,7 @@
 
             
 
-            <td class="description last"><p>The last name of the user</p></td>
+            <td class="description last"><p>The new document that is to be put into the database</p></td>
         </tr>
 
     
@@ -1302,7 +1175,153 @@
 
         
 <div class="param-desc">
-    <p>User Object in collection</p>
+    <p>EmergencyObject</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateAddress"><span class="type-signature">(async) </span>updateAddress<span class="signature">(newAddress)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1771">line 1771</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to update the address of the Emergency Contact</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newAddress</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The new address to be updated in the database</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>EmergencyObject</p>
 </div>
 
 
@@ -1328,7 +1347,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line240">line 240</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1800">line 1800</a>
     </li></ul></dd>
     
 
@@ -1366,6 +1385,10 @@
 
 
 
+
+<div class="description usertext">
+    <p>The method to update the email of the Emergency Service</p>
+</div>
 
 
 
@@ -1418,7 +1441,7 @@
 
             
 
-            <td class="description last"><p>New email of the user to update in the database</p></td>
+            <td class="description last"><p>The new email to be updated to the Emergency Service</p></td>
         </tr>
 
     
@@ -1444,7 +1467,7 @@
 
         
 <div class="param-desc">
-    <p>UserObject</p>
+    <p>EmergencyObject</p>
 </div>
 
 
@@ -1458,7 +1481,7 @@
 
     
 
-    <h4 class="name" id="updateEmergencyContact"><span class="type-signature">(async) </span>updateEmergencyContact<span class="signature">(newPriority, newName<span class="signature-attributes">opt</span>, newRelation<span class="signature-attributes">opt</span>, newPhone<span class="signature-attributes">opt</span>, newEmail<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="updateLatitude"><span class="type-signature">(async) </span>updateLatitude<span class="signature">(newLat)</span><span class="type-signature"></span></h4>
 
     
 
@@ -1470,7 +1493,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line520">line 520</a>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1638">line 1638</a>
     </li></ul></dd>
     
 
@@ -1509,6 +1532,10 @@
 
 
 
+<div class="description usertext">
+    <p>The method to update the latitude of the Emergency service</p>
+</div>
+
 
 
 
@@ -1532,7 +1559,151 @@
         <th>Type</th>
 
         
-        <th>Attributes</th>
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newLat</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The new latitude of the Emergency Service Location</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>EmergencyObject</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateLocation"><span class="type-signature">(async) </span>updateLocation<span class="signature">(newLat, newLong)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1703">line 1703</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to update the location of the Emergency service</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
         
 
         
@@ -1546,7 +1717,7 @@
 
         <tr>
             
-                <td class="name"><code>newPriority</code></td>
+                <td class="name"><code>newLat</code></td>
             
 
             <td class="type">
@@ -1559,20 +1730,304 @@
             </td>
 
             
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>The new priority of the contact</p></td>
+            <td class="description last"><p>The new latitude of the Emergency Service Location</p></td>
         </tr>
 
+    
+
+        <tr>
+            
+                <td class="name"><code>newLong</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The new longitude of the Emergency Unit</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>EmergencyObject</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateLongitude"><span class="type-signature">(async) </span>updateLongitude<span class="signature">(newLong)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1670">line 1670</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to update the Longitude of the Emergency Service</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>newLong</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"><p>The new longitude of the Emergency Unit</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>EmergencyObject</p>
+</div>
+
+
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="updateName"><span class="type-signature">(async) </span>updateName<span class="signature">(newName)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1606">line 1606</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to update the name of the Emergency Unit</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
         <tr>
@@ -1590,55 +2045,121 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>The new name of the contact</p></td>
+            <td class="description last"><p>The new name of the Emergency Unit</p></td>
         </tr>
 
     
-
-        <tr>
-            
-                <td class="name"><code>newRelation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
+    </tbody>
+</table>
 
 
-            
-            </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
 
-                
 
-                
-                </td>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
             
 
-            
+    
 
-            <td class="description last"><p>The new relation of the contact</p></td>
-        </tr>
+    <h4 class="name" id="updatePhone"><span class="type-signature">(async) </span>updatePhone<span class="signature">(newPhone)</span><span class="type-signature"></span></h4>
 
+    
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="db.js.html">db.js</a>, <a href="db.js.html#line1742">line 1742</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
     
 
         <tr>
@@ -1656,185 +2177,10 @@
             </td>
 
             
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
 
             
 
-            <td class="description last"><p>The new phone of the relation</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>newEmail</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="updateEncryption"><span class="type-signature">(async) </span>updateEncryption<span class="signature">(newEncryption)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line272">line 272</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>newEncryption</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>New password of the user to be updated in the database</p></td>
+            <td class="description last"><p>The new phone to update the</p></td>
         </tr>
 
     
@@ -1860,172 +2206,7 @@
 
         
 <div class="param-desc">
-    <p>UserObject</p>
-</div>
-
-
-
-    
-
-
-
-        
-            
-
-    
-
-    <h4 class="name" id="updateName"><span class="type-signature">(async) </span>updateName<span class="signature">(newFirstName, newLastName)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-<dl class="details">
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="db.js.html">db.js</a>, <a href="db.js.html#line299">line 299</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>newFirstName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>New first name of the user to be saved in the database</p></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>newLastName</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"><p>New last name of the user to be saved in the database</p></td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    <p>UserObject</p>
+    <p>Emergency Object</p>
 </div>
 
 

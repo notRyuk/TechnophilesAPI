@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="/circular.png">
+    
+    <meta charset="utf-8">
+    <title>User - TechnophilesAPI</title>
+    
+    <meta name="description" content="The API made by TriColored Technophiles SIH team for easy handling of frond-end apps." />
+    
+        <meta name="keywords" content="SIH, API, Disaster Management, Node, express" />
+        <meta name="keyword" content="SIH, API, Disaster Management, Node, express" />
+    
+    
+    
+    <meta property="og:title" content="TechnophilesAPI"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="logo.png"/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="wrap">
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BlogObject.html">BlogObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="BlogObject.html#create">create</a></li><li data-type='method' style='display: none;'><a href="BlogObject.html#delete">delete</a></li><li data-type='method' style='display: none;'><a href="BlogObject.html#findBySimilarity">findBySimilarity</a></li><li data-type='method' style='display: none;'><a href="BlogObject.html#update">update</a></li></ul></li><li><a href="CollectionObject.html">CollectionObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="CollectionObject.html#emailAlreadyExists">emailAlreadyExists</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#findAll">findAll</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#findById">findById</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#isEmailValid">isEmailValid</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#isPhoneValid">isPhoneValid</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#phoneAlreadyExists">phoneAlreadyExists</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#usernameAlreadyExists">usernameAlreadyExists</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#verify">verify</a></li></ul></li><li><a href="EmergencyObject.html">EmergencyObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="EmergencyObject.html#create">create</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#findByEmail">findByEmail</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#findByName">findByName</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#findByPhone">findByPhone</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#findByType">findByType</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#update">update</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateAddress">updateAddress</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateEmail">updateEmail</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateLatitude">updateLatitude</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateLocation">updateLocation</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateLongitude">updateLongitude</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateName">updateName</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updatePhone">updatePhone</a></li></ul></li><li><a href="NGOObject.html">NGOObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="NGOObject.html#create">create</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#getPinCodeInfo">getPinCodeInfo</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateAddress">updateAddress</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateCloseTime">updateCloseTime</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateDays">updateDays</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateEmail">updateEmail</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateLatitude">updateLatitude</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateLocation">updateLocation</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateLongitude">updateLongitude</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateName">updateName</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updatePhone">updatePhone</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateStartTime">updateStartTime</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateTimings">updateTimings</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#verifyNGO">verifyNGO</a></li></ul></li><li><a href="UserObject.html">UserObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="UserObject.html#deleteEmergencyContact">deleteEmergencyContact</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#extractEmergencyContacts">extractEmergencyContacts</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#findByEmail">findByEmail</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#findByFirstName">findByFirstName</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#findByFullName">findByFullName</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#findByLastName">findByLastName</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#updateEmail">updateEmail</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#updateEmergencyContact">updateEmergencyContact</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#updateEncryption">updateEncryption</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#updateName">updateName</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="global.html#Blog">Blog</a></li><li><a href="Emergency.html">Emergency</a></li><li><a href="global.html#NGO">NGO</a></li><li><a href="global.html#User">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddressOfNGO">AddressOfNGO</a></li><li><a href="global.html#EmergencyContact">EmergencyContact</a></li><li><a href="global.html#Error">Error</a></li><li><a href="global.html#LocationOfNGO">LocationOfNGO</a></li><li><a href="global.html#NameOfUser">NameOfUser</a></li><li><a href="global.html#searchBlog">searchBlog</a></li><li><a href="global.html#TimingsOfNGO">TimingsOfNGO</a></li><li><a href="global.html#UserBlogSchema">UserBlogSchema</a></li></ul>
+    <h3><a href="/login">LOGIN</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">User</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        User
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line22">line 22</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="CreateUser"><span class="type-signature">(route) </span>CreateUser<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line130">line 130</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/user/create</td>
+                            </tr>
+                            </table>
+                            <p>This method creates a new user object in the database.</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">userName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The username of the user</td>
+          </tr><tr>
+            <td class="name">firstName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The first name of the user</td>
+          </tr><tr>
+            <td class="name">lastName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The last name of that user</td>
+          </tr><tr>
+            <td class="name">password</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The encrypted password of the user</td>
+          </tr><tr>
+            <td class="name">email</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The email of the user</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="DeleteUser"><span class="type-signature">(route) </span>DeleteUser<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line480">line 480</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">DELETE</td>
+                            <td class="name last">/user/delete</td>
+                            </tr>
+                            </table>
+                            <p>The method to delete the user from the database</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">userName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The username of the user</td>
+          </tr><tr>
+            <td class="name">token</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The tokenized password of the user</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="findAll"><span class="type-signature">(route) </span>findAll<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line63">line 63</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/user/findAll</td>
+                            </tr>
+                            </table>
+                            <p>This routes helps in finding a collection element by ID</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="FindByEmail"><span class="type-signature">(route) </span>FindByEmail<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line607">line 607</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/user/findByEmail</td>
+                            </tr>
+                            </table>
+                            <p>The method to identify the users by email</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">email</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The email id to fetch</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="FindByID"><span class="type-signature">(route) </span>FindByID<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/user/findByID</td>
+                            </tr>
+                            </table>
+                            <p>This routes helps in finding a collection element by ID</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the user to be searched for</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="FindByName"><span class="type-signature">(route) </span>FindByName<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line548">line 548</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/user/findByName</td>
+                            </tr>
+                            </table>
+                            <p>The method to fetch users by name</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">name</td>
+            <td class="type">NameOfUser</td>
+            
+            
+            <td class="description last">The name of the user to search</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateEmail"><span class="type-signature">(route) </span>UpdateEmail<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line325">line 325</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/user/updateEmail</td>
+                            </tr>
+                            </table>
+                            <p>The method to update the email id of the user</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">userName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The username of the user</td>
+          </tr><tr>
+            <td class="name">The</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">tokenized password of the user</td>
+          </tr><tr>
+            <td class="name">email</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The current email of the user</td>
+          </tr><tr>
+            <td class="name">newEmail</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The new email of the user</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateName"><span class="type-signature">(route) </span>UpdateName<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line404">line 404</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/user/updateName</td>
+                            </tr>
+                            </table>
+                            <p>The method to update the name of the user</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">userName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The username of the user</td>
+          </tr><tr>
+            <td class="name">token</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The tokenized password of the user</td>
+          </tr><tr>
+            <td class="name">name</td>
+            <td class="type">NameOfUser</td>
+            
+            
+            <td class="description last">The current name of the user</td>
+          </tr><tr>
+            <td class="name">newName</td>
+            <td class="type">NameOfUser</td>
+            
+            
+            <td class="description last">The new name of the user</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdatePassword"><span class="type-signature">(route) </span>UpdatePassword<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line247">line 247</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/user/updatePassword</td>
+                            </tr>
+                            </table>
+                            <p>This method updates the password of the mentioned user.</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">userName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The username of the user</td>
+          </tr><tr>
+            <td class="name">token</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The tokenized password of the user</td>
+          </tr><tr>
+            <td class="name">newPassword</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The new tokenized of the user</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateUserName"><span class="type-signature">(route) </span>UpdateUserName<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line169">line 169</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/user/updateUserName</td>
+                            </tr>
+                            </table>
+                            <p>This method updates the username of the mentioned user.</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">userName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The username of the user</td>
+          </tr><tr>
+            <td class="name">token</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The token which is returned</td>
+          </tr><tr>
+            <td class="name">newUserName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The new username of the user</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+    <link type="text/css" rel="stylesheet" href="./style.css">
+    
+</body>
+</html>

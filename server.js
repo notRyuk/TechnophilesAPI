@@ -3,26 +3,37 @@ import { fileURLToPath } from 'url';
 import { join, dirname } from "path";
 import compression from "compression";
 import cors from "cors";
+import SHA256 from "crypto-js/sha256.js";
+import Base64 from "crypto-js/enc-base64.js";
 
 import { PORT } from "./config.js";
-import { UserObject, CollectionObject, BlogObject, NGOObject, EmergencyObject } from "./db.js";
-import { user, blog, ngo, emergency } from "./mongoose.js";
+import { UserObject, CollectionObject, BlogObject, NGOObject, EmergencyObject, DevObject } from "./db.js";
+import { user, blog, ngo, emergency, dev } from "./mongoose.js";
 import { tokenizer } from "./helpers.js";
 
 const app = express()
 
 app.use(cors());
 app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 app.use(compression())
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-/**
- *  TODO: Updated the res.send function with a param of Object which contains key status of status mentioned above and a key doc with the given doc
- *  The above has to be only done only when the send contains a 200 status else status is already present.
- * 
- *  Add the encryption algorithm to all the methods
-*/
+
+const validateToken = async (req, res, next) => {
+    const params = (Object.keys(req.params).length > 0)?params:req.header
+    if(!req.api_key) {
+        return
+    }
+    var dev = await dev.find({token: params.api_key})
+    if(!dev) {
+        return;
+    }
+    next();
+}
+
+// app.use(validateToken)
 
 /**
  * @namespace User
@@ -1539,6 +1550,36 @@ app.get(/\/circular(.png)?$/, async (_, res) => {
 app.use(express.static(join(__dirname, "docs")))
 app.get("/", (_, res) => {
     res.sendFile(join(__dirname, "docs", "index.html"))
+})
+
+app.use(express.static(join(__dirname, "login")))
+
+app.get("/login", (_, res) => {
+    res.sendFile(join(__dirname, "login", "index.html"))
+})
+
+app.post("/signup", async (req, res) => {
+    const body = req.body
+    console.log(body)
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["username", "email", "password"]
+    for(var i of required) {
+        if(!keys.includes(i) || values[keys.indexOf(i)].trim().length === 0) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var encryption = tokenizer.encrypt(body.password)
+    var token = Base64.stringify(SHA256(body.username+body.email+encryption));
+    var dev = await new DevObject(body.username, body.email, encryption, token, new Date()).create()
+    res.status(dev.status || 200)
+    res.send(dev.doc || dev)
 })
 
 app.get("*", (_, res) => {

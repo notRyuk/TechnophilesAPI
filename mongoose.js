@@ -149,12 +149,21 @@ const EmergencySchema = new Schema({
     address: {type: String, required: true}
 })
 
+const DevSchema = new Schema({
+    _id: String,
+    email: String,
+    password: String,
+    token: String,
+    registerTime: Number
+})
+
 const user = model("user", UserSchema)
 const blog = model("blog", BlogSchema)
 const ngo = model("NGO", NGOSchema)
 const emergency = model("EmergencyContact", EmergencySchema)
+const dev = model("dev", DevSchema)
 
 export {
-    user, blog, ngo, emergency,
+    user, blog, ngo, emergency, dev,
     UserBlogSchema, EmergencyContactSchema
 }

@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="/circular.png">
+    
+    <meta charset="utf-8">
+    <title>Emergency - TechnophilesAPI</title>
+    
+    <meta name="description" content="The API made by TriColored Technophiles SIH team for easy handling of frond-end apps." />
+    
+        <meta name="keywords" content="SIH, API, Disaster Management, Node, express" />
+        <meta name="keyword" content="SIH, API, Disaster Management, Node, express" />
+    
+    
+    
+    <meta property="og:title" content="TechnophilesAPI"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:image" content="logo.png"/>
+    
+    <meta property="og:url" content=""/>
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="wrap">
+    
+    <input type="text" id="nav-search" placeholder="Search" />
+    
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BlogObject.html">BlogObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="BlogObject.html#create">create</a></li><li data-type='method' style='display: none;'><a href="BlogObject.html#delete">delete</a></li><li data-type='method' style='display: none;'><a href="BlogObject.html#findBySimilarity">findBySimilarity</a></li><li data-type='method' style='display: none;'><a href="BlogObject.html#update">update</a></li></ul></li><li><a href="CollectionObject.html">CollectionObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="CollectionObject.html#emailAlreadyExists">emailAlreadyExists</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#findAll">findAll</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#findById">findById</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#isEmailValid">isEmailValid</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#isPhoneValid">isPhoneValid</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#phoneAlreadyExists">phoneAlreadyExists</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#usernameAlreadyExists">usernameAlreadyExists</a></li><li data-type='method' style='display: none;'><a href="CollectionObject.html#verify">verify</a></li></ul></li><li><a href="EmergencyObject.html">EmergencyObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="EmergencyObject.html#create">create</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#findByEmail">findByEmail</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#findByName">findByName</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#findByPhone">findByPhone</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#findByType">findByType</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#update">update</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateAddress">updateAddress</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateEmail">updateEmail</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateLatitude">updateLatitude</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateLocation">updateLocation</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateLongitude">updateLongitude</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updateName">updateName</a></li><li data-type='method' style='display: none;'><a href="EmergencyObject.html#updatePhone">updatePhone</a></li></ul></li><li><a href="NGOObject.html">NGOObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="NGOObject.html#create">create</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#getPinCodeInfo">getPinCodeInfo</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateAddress">updateAddress</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateCloseTime">updateCloseTime</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateDays">updateDays</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateEmail">updateEmail</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateLatitude">updateLatitude</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateLocation">updateLocation</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateLongitude">updateLongitude</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateName">updateName</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updatePhone">updatePhone</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateStartTime">updateStartTime</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#updateTimings">updateTimings</a></li><li data-type='method' style='display: none;'><a href="NGOObject.html#verifyNGO">verifyNGO</a></li></ul></li><li><a href="UserObject.html">UserObject</a><ul class='methods'><li data-type='method' style='display: none;'><a href="UserObject.html#deleteEmergencyContact">deleteEmergencyContact</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#extractEmergencyContacts">extractEmergencyContacts</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#findByEmail">findByEmail</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#findByFirstName">findByFirstName</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#findByFullName">findByFullName</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#findByLastName">findByLastName</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#updateEmail">updateEmail</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#updateEmergencyContact">updateEmergencyContact</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#updateEncryption">updateEncryption</a></li><li data-type='method' style='display: none;'><a href="UserObject.html#updateName">updateName</a></li></ul></li></ul><h3>Namespaces</h3><ul><li><a href="global.html#Blog">Blog</a></li><li><a href="Emergency.html">Emergency</a></li><li><a href="global.html#NGO">NGO</a></li><li><a href="global.html#User">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#AddressOfNGO">AddressOfNGO</a></li><li><a href="global.html#EmergencyContact">EmergencyContact</a></li><li><a href="global.html#Error">Error</a></li><li><a href="global.html#LocationOfNGO">LocationOfNGO</a></li><li><a href="global.html#NameOfUser">NameOfUser</a></li><li><a href="global.html#searchBlog">searchBlog</a></li><li><a href="global.html#TimingsOfNGO">TimingsOfNGO</a></li><li><a href="global.html#UserBlogSchema">UserBlogSchema</a></li></ul>
+    <h3><a href="/login">LOGIN</a></h3>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Emergency</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+        Emergency
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line31">line 31</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="CreateEmergency"><span class="type-signature">(route) </span>CreateEmergency<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1218">line 1218</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/emergency/create</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the Emergency Object</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the Emergency Unit</td>
+          </tr><tr>
+            <td class="name">name</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The name of the Emergency Unit</td>
+          </tr><tr>
+            <td class="name">latitude</td>
+            <td class="type">Number</td>
+            
+            
+            <td class="description last">The latitude of the Emergency Unit</td>
+          </tr><tr>
+            <td class="name">longitude</td>
+            <td class="type">Number</td>
+            
+            
+            <td class="description last">The longitude of the Emergency Unit</td>
+          </tr><tr>
+            <td class="name">phone</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The international format of phone number</td>
+          </tr><tr>
+            <td class="name">email</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The email of the Emergency Unit</td>
+          </tr><tr>
+            <td class="name">address</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The current address of the Emergency Service</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CreateEmergency"><span class="type-signature">(static) </span>CreateEmergency<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1464">line 1464</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to create the Emergency Object</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CreateEmergency"><span class="type-signature">(static) </span>CreateEmergency<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1474">line 1474</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to create the Emergency Object</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CreateEmergency"><span class="type-signature">(static) </span>CreateEmergency<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1484">line 1484</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to create the Emergency Object</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CreateEmergency"><span class="type-signature">(static) </span>CreateEmergency<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1494">line 1494</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to create the Emergency Object</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CreateEmergency"><span class="type-signature">(static) </span>CreateEmergency<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1504">line 1504</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to create the Emergency Object</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="CreateEmergency"><span class="type-signature">(static) </span>CreateEmergency<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1514">line 1514</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The method to create the Emergency Object</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="findAll"><span class="type-signature">(route) </span>findAll<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line81">line 81</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/blog/findAll</td>
+                            </tr>
+                            </table>
+                            <p>This routes helps in finding a collection element by ID</p>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="FindByID"><span class="type-signature">(route) </span>FindByID<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line56">line 56</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">GET</td>
+                            <td class="name last">/ngo/findByID</td>
+                            </tr>
+                            </table>
+                            <p>This routes helps in finding a collection element by ID</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the collection to be searched for</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateAddress"><span class="type-signature">(route) </span>UpdateAddress<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1435">line 1435</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/emergency/updateAddress</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the Emergency Object</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the emergency service object</td>
+          </tr><tr>
+            <td class="name">newAddress</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The new email address that is to be fed to the server</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateEmail"><span class="type-signature">(route) </span>UpdateEmail<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1406">line 1406</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/emergency/updateEmail</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the Emergency Object</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the emergency service object</td>
+          </tr><tr>
+            <td class="name">newEmail</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The new email address that is to be fed to the server</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateLatitude"><span class="type-signature">(route) </span>UpdateLatitude<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1289">line 1289</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/emergency/updateLatitude</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the Emergency Object</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the Emergency Service object</td>
+          </tr><tr>
+            <td class="name">newLat</td>
+            <td class="type">Number</td>
+            
+            
+            <td class="description last">The new Latitude of the location to be updated</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateLocation"><span class="type-signature">(route) </span>UpdateLocation<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1347">line 1347</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/emergency/updateLocation</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the Emergency Object</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the emergency service that is to be updated</td>
+          </tr><tr>
+            <td class="name">newLat</td>
+            <td class="type">Number</td>
+            
+            
+            <td class="description last">The new latitude of the emergency service</td>
+          </tr><tr>
+            <td class="name">newLong</td>
+            <td class="type">Number</td>
+            
+            
+            <td class="description last">The new longitude of the emergency service</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateLongitude"><span class="type-signature">(route) </span>UpdateLongitude<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1318">line 1318</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/emergency/updateLongitude</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the Emergency Object</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the Emergency service object</td>
+          </tr><tr>
+            <td class="name">newLong</td>
+            <td class="type">Number</td>
+            
+            
+            <td class="description last">The new longitude of the location that is to be updated</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdateName"><span class="type-signature">(route) </span>UpdateName<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1260">line 1260</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/emergency/updateName</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the Emergency Object</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the user</td>
+          </tr><tr>
+            <td class="name">newName</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The new name of Emergency Service</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="UpdatePhone"><span class="type-signature">(route) </span>UpdatePhone<span class="type-signature"></span></h4>
+
+
+
+
+
+<dl class="details">
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="server.js.html">server.js</a>, <a href="server.js.html#line1377">line 1377</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <h5>Route:</h5>
+                            <table class="params">
+                            <thead><tr><th>Method</th><th class="last">Path</th></tr></thead>
+                            <tr>
+                            <td class="type">POST</td>
+                            <td class="name last">/emergency/updatePhone</td>
+                            </tr>
+                            </table>
+                            <p>The method to create the Emergency Object</p>
+                            <h5>Body Parameters:</h5>
+          <table class="params">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                
+                
+                <th class="last">Description</th>
+              </tr>
+            </thead>
+            <tr>
+            <td class="name">id</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The id of the emergency service object that is to be updated</td>
+          </tr><tr>
+            <td class="name">newPhone</td>
+            <td class="type">String</td>
+            
+            
+            <td class="description last">The new phone number of the emergency service</td>
+          </tr>
+          </table>
+</div>
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/search.js" defer></script>
+
+
+<script src="scripts/collapse.js" defer></script>
+
+
+    <link type="text/css" rel="stylesheet" href="./style.css">
+    
+</body>
+</html>

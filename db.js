@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import axios from "axios";
 
-import { user, blog, ngo, UserBlogSchema, emergency } from "./mongoose.js";
+import { user, blog, ngo, UserBlogSchema, emergency, dev } from "./mongoose.js";
 import { DB_URL } from "./config.js";
 import { searchBlog, stateList } from "./helpers.js";
 
@@ -1826,8 +1826,148 @@ class EmergencyObject extends CollectionObject {
             comment: "There is an error updating the object."
         }
     }
+
+    /**
+     * The method to update the complete Emergency Service Object
+     * @param {EmergencyElement} newDoc The new document that is to be put into the database
+     * @returns EmergencyObject
+     */
+    async update(newDoc) {
+        var {name, latitude, longitude, phone, address} = newDoc
+        if(Object.keys(newDoc).length === 0) {
+            return {
+                status: 404,
+                comment: "No parameter in the input object to update."
+            }
+        }
+        var __emergency = await this.verify()
+        if(!__emergency) {
+            return {
+                status: 404,
+                comment: "The requested id is not in the database."
+            }
+        }
+        var obj = {
+            name: (name)?name:__emergency.name,
+            location: {
+                lat: (latitude)?latitude:__emergency.location.lat,
+                long: (longitude)?longitude:__emergency.location.long
+            },
+            phone: (phone)?phone:__emergency.phone,
+            address: (address)?address:__emergency.address
+        }
+        __emergency = await this.col.findByIdAndUpdate(this.id, {$set: obj})
+        if(__emergency) {
+            return this.__return(__emergency)
+        }
+        return {
+            status: 404,
+            comment: "There is an error updating the object."
+        }
+    }
+
+    /**
+     * The method to find by name of the service.
+     * @param {String} name The name to search in the database
+     * @returns List of Emergency Service numbers
+     */
+    async findByName(name) {
+        return (await this.col.find({name: name}))
+    }
+
+    /**
+     * The method to find by email of the service.
+     * @param {String} email The email of the service to search for
+     * @returns List of Emergency Service numbers
+     */
+    async findByEmail(email) {
+        return (await this.col.find({email: email}))
+    }
+
+    /**
+     * 
+     * @param {String} phone The phone of the service to search for
+     * @returns List of Emergency Service numbers
+     */
+    async findByPhone(phone) {
+        return (await this.col.find({phone: phone}))
+    }
+
+    /**
+     * 
+     * @param {Number} type The type of the emergency service to search for (Hospital = 1, Police = 2, Fire = 3)
+     * @returns List of Emergency Service numbers
+     */
+    async findByType(type) {
+        if(![1, 2, 3].includes(type)) {
+            type = 1
+        }
+        var query = ""
+        if(type === 1) {
+            query = "hospital"
+        }
+        if(type === 2) {
+            query = "police"
+        }
+        if(type === 3) {
+            query = "fire"
+        }
+        return (await this.col.find({}).filter(e => e._id.toLowerCase().includes(query)))
+    }
+}
+
+class DevObject extends CollectionObject {
+
+    constructor(id, email, password, token, registerTime) {
+        super(id, dev)
+
+        this.id = id
+        this.email = email
+        this.password = password
+        this.token = token
+        this.registerTime = registerTime
+
+        this.doc = {
+            _id: this.id,
+            email: this.email,
+            password: this.password,
+            token: this.token,
+            registerTime: this.registerTime
+        }
+    }
+
+    __return(__dev) {
+        return new DevObject(
+            __dev._id,
+            __dev.email,
+            __dev.password,
+            __dev.token,
+            __dev.registerTime
+        )
+    }
+
+    async create() {
+        var __dev = await this.verify()
+        if(__dev) {
+            return this.__return(__dev)
+        }
+        if(!this.isEmailValid(this.email)) {
+            return {
+                status: 404,
+                comment: "The email is invalid."
+            }
+        }
+        __dev = (await new dev(this.doc).save())._doc
+        if(__dev) {
+            return this.__return(__dev)
+        }
+        return {
+            status: 404,
+            comment: "Error connecting to the database"
+        }
+    }
 }
 
 export {
-    UserObject, BlogObject, NGOObject, EmergencyObject, CollectionObject
+    UserObject, BlogObject, NGOObject, EmergencyObject, DevObject, CollectionObject
 }
