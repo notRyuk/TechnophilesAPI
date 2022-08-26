@@ -6,7 +6,7 @@ import cors from "cors";
 
 import { PORT } from "./config.js";
 import { UserObject, CollectionObject, BlogObject, NGOObject, EmergencyObject } from "./db.js";
-import { user, blog, ngo } from "./mongoose.js";
+import { user, blog, ngo, emergency } from "./mongoose.js";
 import { tokenizer } from "./helpers.js";
 
 const app = express()
@@ -92,7 +92,6 @@ const __dirname = dirname(__filename);
 app.get(/^\/(user|blog|ngo|emergency)\/(findByID|findAll)$/, async (req, res) => {
     const path = req.path
     const body = Object.keys(req.body).length?req.body:req.query
-    console.log(body)
     if(path.includes("findByID") && !body.id) {
         res.status(404)
         res.send({
@@ -111,6 +110,9 @@ app.get(/^\/(user|blog|ngo|emergency)\/(findByID|findAll)$/, async (req, res) =>
     }
     if(path.includes("ngo")) {
         obj = new CollectionObject(body.id, ngo)
+    }
+    if(path.includes("emergency")) {
+        obj = new CollectionObject(body.id, emergency)
     }
     obj = path.includes("findByID")?(await obj.findById(body.id)):(await obj.findAll())
     if(!obj) {
@@ -1229,14 +1231,15 @@ app.post("/ngo/updateLongitude", async (req, res) => {
  * @bodyparam {Number} longitude The longitude of the Emergency Unit
  * @bodyparam {String} phone The international format of phone number
  * @bodyparam {String} email The email of the Emergency Unit
+ * @bodyparam {String} address The current address of the Emergency Service
  */
 app.post("/emergency/create", async (req, res) => {
     const body = req.body
     var keys = Object.keys(body)
     var values = Object.values(body)
-    var required = ["id", "name", "latitude", "phone", "email", "longitude"]
+    var required = ["id", "name", "phone", "email", "latitude", "longitude", "address"]
     for(var i of required) {
-        if(!keys.includes(i) || typeof keys === String && values[keys.indexOf(i)].trim().length === 0) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
             res.status(404)
             res.send({
                 status: 404,
@@ -1252,7 +1255,8 @@ app.post("/emergency/create", async (req, res) => {
         body.latitude,
         body.longitude,
         body.phone,
-        body.email
+        body.email,
+        body.address
     ).create()
     res.status(emergency.status || 200)
     res.send(emergency.doc || emergency)
@@ -1260,61 +1264,206 @@ app.post("/emergency/create", async (req, res) => {
 
 /**
  * The method to create the Emergency Object
- * @name CreateEmergency
+ * @name UpdateName
  * @memberof Emergency
+ * @route {POST} /emergency/updateName
+ * @bodyparam {String} id The id of the user
+ * @bodyparam {String} newName The new name of Emergency Service
  */
 app.post("/emergency/updateName", async (req, res) => {
-    res.send({status: 200, comment: "This method is yet to be built"})
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newName"]
+    for(var i of required) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var emergency = await new EmergencyObject(body.id).updateName(body.newName)
+    res.status(emergency.status || 200)
+    res.send(emergency.doc || emergency)
 })
 
 /**
  * The method to create the Emergency Object
- * @name CreateEmergency
+ * @name UpdateLatitude
  * @memberof Emergency
+ * @route {POST} /emergency/updateLatitude
+ * @bodyparam {String} id The id of the Emergency Service object
+ * @bodyparam {Number} newLat The new Latitude of the location to be updated
  */
 app.post("/emergency/updateLatitude", async (req, res) => {
-    res.send({status: 200, comment: "This method is yet to be built"})
-
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newLat"]
+    for(var i of required) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var emergency = await new EmergencyObject(body.id).updateLatitude(body.newLat)
+    res.status(emergency.status || 200)
+    res.send(emergency.doc || emergency)
 })
 
 /**
  * The method to create the Emergency Object
- * @name CreateEmergency
+ * @name UpdateLongitude
  * @memberof Emergency
+ * @route {POST} /emergency/updateLongitude
+ * @bodyparam {String} id The id of the Emergency service object
+ * @bodyparam {Number} newLong The new longitude of the location that is to be updated
  */
 app.post("/emergency/updateLongitude", async (req, res) => {
-    res.send({status: 200, comment: "This method is yet to be built"})
-
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newLong"]
+    for(var i of required) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var emergency = await new EmergencyObject(body.id).updateLongitude(body.newLong)
+    res.status(emergency.status || 200)
+    res.send(emergency.doc || emergency)
 })
 
 /**
  * The method to create the Emergency Object
- * @name CreateEmergency
+ * @name UpdateLocation
  * @memberof Emergency
+ * @route {POST} /emergency/updateLocation
+ * @bodyparam {String} id The id of the emergency service that is to be updated
+ * @bodyparam {Number} newLat The new latitude of the emergency service
+ * @bodyparam {Number} newLong The new longitude of the emergency service
  */
 app.post("/emergency/updateLocation", async (req, res) => {
-    res.send({status: 200, comment: "This method is yet to be built"})
-
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newLong", "newLat"]
+    for(var i of required) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var emergency = await new EmergencyObject(body.id).updateLocation(body.newLat, body.newLong)
+    res.status(emergency.status || 200)
+    res.send(emergency.doc || emergency)
 })
 
 /**
  * The method to create the Emergency Object
- * @name CreateEmergency
+ * @name UpdatePhone
  * @memberof Emergency
+ * @route {POST} /emergency/updatePhone
+ * @bodyparam {String} id The id of the emergency service object that is to be updated
+ * @bodyparam {String} newPhone The new phone number of the emergency service
  */
 app.post("/emergency/updatePhone", async (req, res) => {
-    res.send({status: 200, comment: "This method is yet to be built"})
-
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newPhone"]
+    for(var i of required) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var emergency = await new EmergencyObject(body.id).updatePhone(body.newPhone)
+    res.status(emergency.status || 200)
+    res.send(emergency.doc || emergency)
 })
 
 /**
  * The method to create the Emergency Object
- * @name CreateEmergency
+ * @name UpdateEmail
  * @memberof Emergency
+ * @route {POST} /emergency/updateEmail
+ * @bodyparam {String} id The id of the emergency service object
+ * @bodyparam {String} newEmail The new email address that is to be fed to the server
  */
-app.post("/emergency/updateAddress", async (req, res) => {
-    res.send({status: 200, comment: "This method is yet to be built"})
+app.post("/emergency/updateEmail", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newEmail"]
+    for(var i of required) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var emergency = await new EmergencyObject(body.id).updateEmail(body.newEmail)
+    res.status(emergency.status || 200)
+    res.send(emergency.doc || emergency)
+})
 
+/**
+ * The method to create the Emergency Object
+ * @name UpdateAddress
+ * @memberof Emergency
+ * @route {POST} /emergency/updateAddress
+ * @bodyparam {String} id The id of the emergency service object
+ * @bodyparam {String} newAddress The new email address that is to be fed to the server
+ */
+ app.post("/emergency/updateAddress", async (req, res) => {
+    const body = req.body
+    var keys = Object.keys(body)
+    var values = Object.values(body)
+    var required = ["id", "newAddress"]
+    for(var i of required) {
+        if(!keys.includes(i) || (typeof values[keys.indexOf(i)] === String && values[keys.indexOf(i)].trim().length === 0)) {
+            res.status(404)
+            res.send({
+                status: 404,
+                error: `The ${i} parameter is missing or empty in the request body.`,
+                comment: "The required parameters are needed for making a request."
+            })
+            return
+        }
+    }
+    var emergency = await new EmergencyObject(body.id).updateAddress(body.newAddress)
+    res.status(emergency.status || 200)
+    res.send(emergency.doc || emergency)
 })
 
 /**

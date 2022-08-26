@@ -1498,15 +1498,19 @@ class EmergencyObject extends CollectionObject {
      * @param {Number} longitude The longitude of the emergency unit
      * @param {String} phone The phone number of the emergency unit
      * @param {String} email The email of the emergency unit 
+     * @param {String} address The address of the emergency unit 
      */
-    constructor(id, name, latitude, longitude, phone, email) {
+    constructor(id, name, latitude, longitude, phone, email, address) {
+        super(id, emergency)
+
         this.id = id
         this.name = name
         this.latitude = latitude
         this.longitude = longitude
         this.phone = phone
         this.email = email
-        
+        this.address = address
+
         this.doc = {
             _id: this.id,
             name: this.name,
@@ -1515,7 +1519,8 @@ class EmergencyObject extends CollectionObject {
                 long: this.longitude
             },
             phone: this.phone,
-            email: this.email
+            email: this.email,
+            address: this.data
         }
     }
 
@@ -1534,7 +1539,8 @@ class EmergencyObject extends CollectionObject {
             __emergency.location.lat,
             __emergency.location.long,
             __emergency.phone,
-            __emergency.email
+            __emergency.email,
+            __emergency.address
         )
     }
     /**
@@ -1587,7 +1593,8 @@ class EmergencyObject extends CollectionObject {
                 long: this.longitude
             },
             phone: this.phone,
-            email: this.email
+            email: this.email,
+            address: this.address
         })).save()
         return this.__return(__emergency._doc)
     }

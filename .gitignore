@@ -11,3 +11,6 @@ returnAddress.js
 functions.js
 
 *.stackdump
+
+*.zip
+Emergency_zipped/
